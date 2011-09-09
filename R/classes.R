@@ -2,61 +2,80 @@
 
 setClassUnion("characterOrLogical", c("character", "logical"))
 
-##' Virtual Class to represent the  output of betfair functions
+##' Virtual Class to represent the  simplified output of betfairly functions
 ##'
+##' As described in \code{'\link{betfairly-package}'} functions can return four
+##' types of output xml, S4,  list or simplified output which is an object of
+##' class \code{bfSimpleOutput}.
+##'
+##' There are two classes what inherit from \code{bfSimpleOutput} -
+##' \code{\link{bfSimpleOutputList}} and \code{\link{bfSimpleOutputDF}}. All
+##' \code{betfairly} functions return an object which extends one of these two
+##' classes. The names of the classes are always constructed by appending
+##' "Simple" or "SimpleDF" to the name of native Betfair class. For example the
+##' function \code{\link{GetEvents}} returns an object of class
+##' \code{GetEventsRespSimple} which means that is is a list inherited from
+##' \code{bfSimpleOutputList} and the native Betfair response type  is
+##' \code{GetEventsResp}, so you can easily  find the documentation in Betfair
+##' API reference guide.  Function \code{\link{getAllMarkets}} return an object
+##' of class \code{GetAllMarketsRespSimpleDF} which means that it inherits from
+##' \code{\link{bfSimpleOutputDF} and is a data.frame.
+##'
+##' \section{Slots}{
+##' \describe{
+##'     \item{\code{bfType}:}{Name of Betfair SOAP type.}
+##'     \item{\code{errorCode}:}{Error code returned by Betfair api. You should check this first.}
+##'     \item{\code{minorErrorCode}:}{Age verification error}
+##' }
+##' }
 ##' @docType class
 ##' @export
-##' @keywords internal class
+##' @keywords class
+##' @seealso  \code{\link{bfSimpleOutputList-class}}, \code{\link{bfSimpleOutputDF-class}}
 setClass("bfSimpleOutput",
          representation = representation(
            bfType = "character",
            errorCode = "characterOrLogical",
            minorErrorCode = "characterOrLogical"))
 
-eval({
-    setClass("bfSimpleOutputDF", contains = c("data.frame", "bfSimpleOutput"))
-})
 
-## bfListOutput,  bfS4Output, bfXMLOutput?? implement? :tothink
-
-##' Class to represent the simplified output of betfair functions.
+##' \code{bfSimpleOutputDF} is an S4 data.frame containing betfair tabular output.
 ##'
-##' As described in \code{'\link{betfair-package}'} functions can have three types of output xml, S4 and simplified
-##' output which is a data frame or an object of class bfSimpleOutput.
 ##'
-##' \code{bfSimpleOutput} is an S4 list containing complex  Betfair API output
-##' as familiar R objects, usually one or two data.frames. Normally  this is the main
-##' output of the function and that the user is interested in.
+##' Additional slots are usually data frames containing complex tabular
+##' data. For example an object \code{GetEventsRespSimple}, returned by function
+##' \code{\link{getEvents},  contains two slots - \code{eventItems} and
+##' \code{marketItems}.
 ##'
-##' All other (usually simple) information which comes with Betfair API response
-##' is stored in \code{info} slot.
-##'
-##' }
-##' \section{Slots}{
-##' \describe{
-##'     \item{\code{.Data}:}{Object of class \code{"list"}.}
-##'     \item{\code{bfType}:}{Object of class \code{"character"} This is the native betfair class. You can see the S4 representation of it by \code{getClass([bfType])}. See \code{\link{bfInitClasses}} for more details.}
-##'     \item{\code{info}:}{Object of class \code{"list"}. This is a list of objects of basic types returned by the API and usually constitutes the information fields of API response.}
-##'     \item{\code{names}:}{Object of class \code{"character"}.}
-##' }
-##' }
-##' \section{Extends}{
-##'
-##' Class \code{"\linkS4class{namedList}"}, directly.\
-##'
-##' Class \code{"\linkS4class{list}"}, by class "namedList", distance 2.
-##'
-##' Class \code{"\linkS4class{vector}"}, by class "namedList", distance 3.
-##'
-##' Class \code{"\linkS4class{SOAPTypeOrList}"}, by class "namedList", distance 3.
-##'
-##' }
 ##' \section{Methods}{
 ##' \describe{
 ##'     \item{show}{\code{signature(object = "bfSimpleOutput")}: ... }
 ##' }
 ##' @export
-##' @seealso \code{\link{betfair-package}} \code{\link{bfInitClasses}}
+##' @seealso \code{\link{betfairly-package}} \code{\link{bfInitClasses}}
+##' @keywords class
+##' @author Vitalie Spinu
+setClass("bfSimpleOutputDF",
+         contains = c("data.frame", "bfSimpleOutput"))
+
+## bfListOutput,  bfS4Output, bfXMLOutput?? implement? :tothink
+
+
+##' \code{bfSimpleOutputList} is an S4 list containing simple Betfair API output
+##' as familiar basic R types.
+##'
+##'
+##' Additional slots are usually data frames containing complex tabular
+##' data. For example an object \code{GetEventsRespSimple}, returned by function
+##' \code{\link{getEvents},  contains two slots - \code{eventItems} and
+##' \code{marketItems}.
+##'
+##' \section{Methods}{
+##' \describe{
+##'     \item{show}{\code{signature(object = "bfSimpleOutput")}: ... }
+##' }
+##' @export
+##' @seealso \code{\link{betfairly-package}} \code{\link{bfInitClasses}}
 ##' @keywords class
 ##' @author Vitalie Spinu
 setClass("bfSimpleOutputList",
@@ -121,13 +140,13 @@ eval({
         setClass(paste(nm, "RespSimpleDF", sep = ""), contains = "bfSimpleOutputDF")
 })
 
-##' All betfair S4 classes inherit from this class
+##' All betfairly S4 classes inherit from this class.
 ##'
-##' If \code{'output'} parameter is "S4", betfair api functions return an S4
+##' If \code{'output'} parameter is "S4", betfairly api functions return an S4
 ##' object. The structure of this object is described by the WSDL betfair
 ##' service file.
 ##'
-##' For parsimony reasons the betfair S4 classes are not installed with
+##' For parsimony reasons the betfairly S4 classes are not installed with
 ##' the package. You need to run
 ##'
 ##' \code{   bfInitClasses()}
@@ -139,9 +158,9 @@ eval({
 ##' \code{   install.packages("XMLSchema")  ## windows binaries }
 ##'
 ##' \code{   install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type = "source")  ## from source}
-##' @aliases betfair-class
+##' @aliases betfairly-class
 ##' @docType class
-##' @seealso \code{'\link{betfair-package}'} \code{'link{bfInitClasses}'}
+##' @seealso \code{'\link{betfairly-package}'} \code{'link{bfInitClasses}'}
 ##' @export
 ##' @keywords class
 setClass("betfair")

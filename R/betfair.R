@@ -22,29 +22,28 @@
 ##' Retrieve your P&L for a market \tab \code{\link{getMarketProfitandLoss}}
 ##' }
 ##'
+##' For the list of all implemented functions and the details of the current
+##' development status please see
+##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo.org}.
 ##'
-##' Some functions are deprecated or redundant and thus not implemented. For
-##' the details on the current development status of betfairly package please
-##' refer to \code{"todo.org"} file in the root of package installation directory.
-##'
-##' If some particular functionality that you need is missing,  please contact the author.
+##' If a particular functionality that you need is missing,  please contact the author.
 ##'
 ##' For a description of payed and free access types see
 ##' \url{http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64}.
-##'
 ##' }
 ##'
-##' \section{Output of betfairly functions}{
+##' \section{Output of \code{betfairly} functions}{
 ##'
-##' All betfairly API functions can return four types of
+##' All \code{betfairly} API functions can return four types of
 ##' output, given by the \code{option} parameter which can be:
 ##'
 ##' \describe{
 ##'
 ##' \item{\code{simple} (the default)}{Simplified output represented by a
-##' \code{\link{bfSimpleOutput}} object containing slots \code{bfType}  (original
-##' betfair class), \code{errorCode} ("OK" if succeed),  and
-##' \code{minorErrorCode}  (usually an empty string). See \code{\link{bfSimpleOutput-class}}  for more information.}
+##' \code{\link{bfSimpleOutput}} object containing slots \code{bfType}
+##' (original betfair class), \code{errorCode} ("OK" if succeed),  and
+##' \code{minorErrorCode}  (usually an empty string). See
+##' \code{\link{bfSimpleOutput-class}}  for more information.}
 ##'
 ##' \item{\code{xml}}{raw XML representation}
 ##'
@@ -52,15 +51,20 @@
 ##'
 ##' \item{\code{S4}}{S4 object as described by the service SOAP protocol. Note what
 ##' you will need \code{XMLSchema} package for the S4 conversion to work,
-##' as it defines some  classes which are not provided with betfairly package} }
+##' as it defines some  classes which are not provided with \code{betfairly} package} }
+##'
+##' }
 ##'
 ##' \section{Betfair exchange servers}{ Functions to betfair exchange services
-##' contain an \code{server} parameter  which can be either "GB" (the default)
+##' accept a \code{server} parameter, which can be either "GB" (the default)
 ##' or "AU". You can set a different default with  \code{options(bfServer =
 ##' "AU")}
+##' }
 ##'
-##' \section{Curl Options}{
-##' Each betfairly function accepts \code{curlOpts} parameter which is passed directly  to
+##' \section{Curl Options}{ Each \code{betfairly} function accepts
+##' \code{curlOpts} parameter which is passed directly to
+##' \code{\link{curlPerform}},  see the documentation of that function for
+##' details.
 ##' @name betfairly-package
 ##' @docType package
 ##' @title Access Betfair API from R
