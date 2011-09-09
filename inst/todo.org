@@ -1,3 +1,9 @@
+The chapters are the corresponding entries in official Betfair Documentation.
+Markes should be read as follows:
+ "X" implemented
+ " " will be implemented in near future
+ "-" might be implemented some day but are not the priority.
+ "n" will not be implemented due to to deprecation or redundancy.
 
 * Part II General API Services Reference
 - [-] Session Management [4/5]
