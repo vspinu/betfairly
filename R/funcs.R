@@ -61,7 +61,7 @@ getReqOrRespNames <- function(Class){
 ##' @param url service url
 ##' @param curlOpts Rcurl options,  see \code{'\link{curlPerform}'} for details
 ##' @return \code{'\link[=bfSimpleOutput-class]{bfSimpleOutput}'} object, xml node or S4 object,  as specified by the \code{output} parameter
-##' @seealso \code{'\link{betfair-package}'} \code{'\link{bfBuildMessage}'}
+##' @seealso \code{'\link{betfairly-package}'} \code{'\link{bfBuildMessage}'}
 ##' @references \url{https://docs.developer.betfair.com/betfair/}
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @keywords internal
@@ -140,7 +140,7 @@ bfCollapseParams <- function(parameters = list()){
 ##' @param tp types namespace  url
 ##' @param sessionToken
 ##' @return \code{'\link[=bfSimpleOutput-class]{bfSimpleOutput}'} object, xml node or S4 object,  as specified by the \code{output} parameter
-##' @seealso \code{'\link{betfair-package}'} \code{'\link{bfRequest}'}
+##' @seealso \code{'\link{betfairly-package}'} \code{'\link{bfRequest}'}
 ##' @references \url{https://docs.developer.betfair.com/betfair/}
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @keywords internal
@@ -425,7 +425,7 @@ bfArrayToDataFrame2 <- function(x, ...){
 ##' @param type betfair type (equivalently S4 class name) of the output
 ##' @param converters a list of functions to be used to convert undefined classes (see the object \code{defaultStructBFConverters})
 ##' @param forceList TRUE for recursive list mirroring the node
-##' @seealso \code{'\link{betfair-package}'} \code{'\link{bfInitClasses}'}
+##' @seealso \code{'\link{betfairly-package}'} \code{'\link{bfInitClasses}'}
 ##' @references https://docs.developer.betfair.com/betfair/
 ##' @author Vitalie Spinu
 ##' @docType methods
@@ -537,6 +537,8 @@ eval({
 .simple_GetBetHistory <- function(res, ...){
     res <- res[["betHistoryItems"]]
     res <- fromBFXML(res, forceList = TRUE)
+    errorCode <- xmlValue(res[["errorCode"]])
+    minorErrorCode <- xmlValue(res[["minorErrorCode"]])
     if(is1NA(res)) return( new("GetBetHistoryRespSimple", errorCode = errorCode, minorErrorCode = minorErrorCode))
     len <- length(res)
     matches <- list()
@@ -711,7 +713,7 @@ bfGenerateClasses <- function(types, verbose = FALSE, where = .GlobalEnv){
 ##' @param verbose  Print info message for each class
 ##' @param where Environment in which to store the class definitions; defaults to global environment.
 ##' @return \code{'\link[=bfSimpleOutput-class]{bfSimpleOutput}'} object, xml node or S4 object,  as specified by the \code{output} parameter
-##' @seealso \code{'\link{betfair-package}'} \code{'\link{bfSimpleOutput-class}'}
+##' @seealso \code{'\link{betfairly-package}'} \code{'\link{bfSimpleOutput-class}'}
 ##' @references \url{https://docs.developer.betfair.com/betfair/}
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
@@ -847,7 +849,7 @@ bfInitClasses <- function(verbose = FALSE, where = .GlobalEnv){
 ##  ("title" . "")
 ##  ("param" . "")
 ##  ("return" . "\\code{'\\link[=bfSimpleOutput-class]{bfSimpleOutput}'} object, xml node or S4 object,  as specified by the \\code{output} parameter")
-##  ("seealso" . "\\code{'\\link{betfair-package}'} \\code{'\\link{bfSimpleOutput-class}'}")
+##  ("seealso" . "\\code{'\\link{betfairly-package}'} \\code{'\\link{bfSimpleOutput-class}'}")
 ##  ("references" . "\\url{https://docs.developer.betfair.com/betfair/}")
 ##  ("author" . "Vitalie Spinu (\\email{spinuvit@@gmail.com})")
 ## )

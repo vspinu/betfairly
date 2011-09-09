@@ -1,5 +1,5 @@
 ## in inst directory
-setwd("betfairly/inst"
+setwd("betfairly/inst")
 .build_sysdata()
 
 ## package.skeleton("betfair1", enviro = new.env(),
@@ -16,8 +16,15 @@ roxygen:::roxygenize("betfairly", "betfairly.roxygen", use.Rd2 = T)
 system("rm betfairly.roxygen.pdf")
 system("R CMD Rd2pdf betfairly.roxygen")
 
-system("cp betfairly/inst/sysdata.rda betfairly/R/")
+system("cp betfairly/inst/sysdata.rda betfairly.roxygen/R/")
 
+system("R CMD check betfairly.roxygen")
+tools::showNonASCII(readLines("./betfairly/R/betfair.R"))
+system("rm betfairly.roxygen/R/.Rhistory")
+
+system("R CMD build betfairly.roxygen")
+install.packages("betfairly_1.0.tar.gz")
+sdf
 
 ## ### my data colectors
 ## getUsefulMarkets <- function(limit = 100){

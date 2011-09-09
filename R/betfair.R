@@ -24,7 +24,7 @@
 ##'
 ##' For the list of all implemented functions and the details of the current
 ##' development status please see
-##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo.org}.
+##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo}.
 ##'
 ##' If a particular functionality that you need is missing,  please contact the author.
 ##'
@@ -1095,7 +1095,7 @@ updateBets <- function(bets = list(), betIds, newPrices, oldPrices, newSizes, ol
         if(!missing(oldPrices)) args[["oldPrice"]] <- oldPrices
         if(!missing(newSizes)) args[["newSize"]] <- newSizes
         if(!missing(oldSizes)) args[["oldSize"]] <- oldSizes
-        if(!missing(newBetPersistenceTypes)) args[["newBetPersistenceType"]] <- newBetPersistenceType
+        if(!missing(newBetPersistenceTypes)) args[["newBetPersistenceType"]] <- newBetPersistenceTypes
         if(!missing(oldBetPersistenceTypes)) args[["oldBetPersistenceType"]] <- oldBetPersistenceTypes
         bets <- c(bets, do.call("mapply",  c("bfBetUpdate", args)))
     }
@@ -1111,8 +1111,8 @@ updateBets <- function(bets = list(), betIds, newPrices, oldPrices, newSizes, ol
 ##' Various functions to access information about your account and wallets.
 ##'
 ##' Retrieve information about your local wallet on a particular exchange
-##' server. For an explanation of the concept of wallets, see “Using
-##' Region-specific Wallets for Placing Bets” on page 12 in Betfair API
+##' server. For an explanation of the concept of wallets, see "Using
+##' Region-specific Wallets for Placing Bets" on page 12 in Betfair API
 ##' Developer Documentation.
 ##' @title Account management.
 ##' @rdname BF_Acount_Management
@@ -1182,8 +1182,8 @@ getSubscriptionInfo <- function( output = getOption("bfOutput"), curlOpts = list
 ##'
 ##' Transfer funds between your UK and Australian account wallets. The
 ##' concept of account wallets has been introduced in release 5.0 of the Betfair
-##' API. Instead of a single account holding all of a customer’s funds for
-##' betting on sports events, there are now two “wallets” for each customer’s
+##' API. Instead of a single account holding all of a customer's funds for
+##' betting on sports events, there are now two "wallets" for each customer's
 ##' account: one for betting on the UK exchange server and one for betting on
 ##' the Australian exchange server.
 ##' @rdname BF_Acount_Management

@@ -5,7 +5,7 @@ setClassUnion("characterOrLogical", c("character", "logical"))
 ##' Virtual Class to represent the  simplified output of betfairly functions
 ##'
 ##' As described in \code{'\link{betfairly-package}'} functions can return four
-##' types of output xml, S4,  list or simplified output which is an object of
+##' types of output xml, S4,  list or simplified output of
 ##' class \code{bfSimpleOutput}.
 ##'
 ##' There are two classes what inherit from \code{bfSimpleOutput} -
@@ -13,25 +13,27 @@ setClassUnion("characterOrLogical", c("character", "logical"))
 ##' \code{betfairly} functions return an object which extends one of these two
 ##' classes. The names of the classes are always constructed by appending
 ##' "Simple" or "SimpleDF" to the name of native Betfair class. For example the
-##' function \code{\link{GetEvents}} returns an object of class
-##' \code{GetEventsRespSimple} which means that is is a list inherited from
+##' function \code{\link{getEvents}} returns an object of class
+##' \code{GetEventsRespSimple} meaning that it is a list inherited from
 ##' \code{bfSimpleOutputList} and the native Betfair response type  is
 ##' \code{GetEventsResp}, so you can easily  find the documentation in Betfair
 ##' API reference guide.  Function \code{\link{getAllMarkets}} return an object
 ##' of class \code{GetAllMarketsRespSimpleDF} which means that it inherits from
-##' \code{\link{bfSimpleOutputDF} and is a data.frame.
-##'
+##' \code{\link{bfSimpleOutputDF}} and is a data.frame.
+##' }
 ##' \section{Slots}{
 ##' \describe{
 ##'     \item{\code{bfType}:}{Name of Betfair SOAP type.}
 ##'     \item{\code{errorCode}:}{Error code returned by Betfair api. You should check this first.}
 ##'     \item{\code{minorErrorCode}:}{Age verification error}
 ##' }
-##' }
+##'
 ##' @docType class
 ##' @export
 ##' @keywords class
 ##' @seealso  \code{\link{bfSimpleOutputList-class}}, \code{\link{bfSimpleOutputDF-class}}
+##' @examples
+##'  getClass("bfSimpleOutput")
 setClass("bfSimpleOutput",
          representation = representation(
            bfType = "character",
@@ -41,20 +43,12 @@ setClass("bfSimpleOutput",
 
 ##' \code{bfSimpleOutputDF} is an S4 data.frame containing betfair tabular output.
 ##'
-##'
-##' Additional slots are usually data frames containing complex tabular
-##' data. For example an object \code{GetEventsRespSimple}, returned by function
-##' \code{\link{getEvents},  contains two slots - \code{eventItems} and
-##' \code{marketItems}.
-##'
-##' \section{Methods}{
-##' \describe{
-##'     \item{show}{\code{signature(object = "bfSimpleOutput")}: ... }
-##' }
 ##' @export
-##' @seealso \code{\link{betfairly-package}} \code{\link{bfInitClasses}}
+##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}} \code{\link{bfSimpleOutputList}}
 ##' @keywords class
 ##' @author Vitalie Spinu
+##' @examples
+##'  getClass("bfSimpleOutputDF")
 setClass("bfSimpleOutputDF",
          contains = c("data.frame", "bfSimpleOutput"))
 
@@ -67,9 +61,9 @@ setClass("bfSimpleOutputDF",
 ##'
 ##' Additional slots are usually data frames containing complex tabular
 ##' data. For example an object \code{GetEventsRespSimple}, returned by function
-##' \code{\link{getEvents},  contains two slots - \code{eventItems} and
+##' \code{\link{getEvents}},  contains two slots - \code{eventItems} and
 ##' \code{marketItems}.
-##'
+##' }
 ##' \section{Methods}{
 ##' \describe{
 ##'     \item{show}{\code{signature(object = "bfSimpleOutput")}: ... }
@@ -78,6 +72,8 @@ setClass("bfSimpleOutputDF",
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfInitClasses}}
 ##' @keywords class
 ##' @author Vitalie Spinu
+##' @examples
+##'   getClass("bfSimpleOutputList")
 setClass("bfSimpleOutputList",
          contains = c("namedList", "bfSimpleOutput"))
 
