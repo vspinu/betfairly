@@ -1,0 +1,76 @@
+
+* Part II General API Services Reference
+- [-] Session Management [4/5]
+  - [X] Chapter 5	 bfLogin (global)
+  - [X] Chapter 6	 bfLogout (global)
+  - [X] Chapter 7	 keepAlive (global)
+  - [X] --------          bfSessionToken
+  - [ ] --------          bfSessionHandler
+
+* Part III Read-Only Betting API Services Reference [21/30]
+- [-] Currency management [0/3]
+  - [-] Chapter 8	 Convert Currency (global)                      [payed]
+  - [-] Chapter 10	 Get All Currencies (global)                    [payed]
+  - [-] Chapter 11	 Get All Currencies V2 (global)                 [payed]
+- [X] Get Events [3/3]
+  - [X] Chapter 9	 getActiveEventTypes (global)
+  - [X] Chapter 12	 getAllEventTypes (global)
+  - [X] Chapter 22	 getEvents (global)
+- [-] Get Markets [5/9]
+  - [X] Chapter 13	 getAllMarkets (exchange)
+  - [n] Chapter 21	 Get Detail Available Market Depth (exchange)   [deprecated]
+  - [-] Chapter 23	 Get In-Play Markets (exchange)                 [payed]
+  - [X] Chapter 24	 getMarket (exchange)
+  - [X] Chapter 25	 getMarketInfo (exchange)
+  - [X] Chapter 31	 getMarketTradedVolume (exchange)
+  - [X] Chapter 32	 getMarketTradedVolumeCompressed (exchange)
+  - [-] Chapter 33	 Get Private Markets (exchange)
+  - [-] Chapter 34	 Get Silks (exchange)                           [payed]
+  - [-] Chapter 35	 Get Silks V2 (exchange)                        [payed]
+- [X] Get Prices [3/3]
+  - [X] Chapter 18	 getCompleteMarketPricesCompressed (exchange)
+  - [X] Chapter 26	 getMarketPrices (exchange)
+  - [X] Chapter 27	 getMarketPricesCompressed (exchange)
+- [X] Bet History [7/7]
+  - [X] Chapter 14	 getBet (exchange)
+  - [X] Chapter 15	 getBetHistory (exchange)
+  - [X] Chapter 16	 getBetLite (exchange)
+  - [X] Chapter 17	 getBetMatchesLite (exchange)
+  - [n] Chapter 19	 Get Current Bets (exchange                     [deprecated]
+  - [n] Chapter 20	 Get Current Bets Lite (exchange)               [deprecated]
+  - [X] Chapter 28	 getMUBets (exchange)
+  - [X] Chapter 29	 getMUBetsLite (exchange)
+  - [X] Chapter 30	 getMarketProfitAndLoss (exchange)
+
+* Part IV	 Bet Placement API Services Reference [5/5]
+- [X] Bet Placement [4/4]
+  - [X] Chapter 36	 cancelBets (exchange)
+  - [X] Chapter 37	 cancelBetsByMarket (exchange)                  [payed]
+  - [X] Chapter 38	 placeBets (exchange)
+  - [X] Chapter 39	 updateBets (exchange)
+
+* Part V	 Account Management API Services Reference [5/5]
+  - [n] Chapter 40	 Add Payment Card (global)            [payed]
+  - [n] Chapter 41	 Delete Payment Card (global)         [payed]
+  - [n] Chapter 42	 Deposit From Payment Card (global)   [payed]
+  - [n] Chapter 43	 Forgot Password (global)             [payed]
+  - [X] Chapter 44	 getAccountFunds (exchange)
+  - [X] Chapter 45	 getAccountStatement (exchange)
+  - [n] Chapter 46	 Get Payment Card (global)            [payed]
+  - [X] Chapter 47	 getSubscriptionInfo (global)
+  - [n] Chapter 48	 Modify Password (global)             [payed]
+  - [n] Chapter 49	 Modify Profile (global)
+  - [n] Chapter 50	 Retrieve LIMB Message (global)       [payed]
+  - [n] Chapter 51	 Self Exclude (global)
+  - [n] Chapter 52	 Set Chat Name(global)                [payed]
+  - [n] Chapter 53	 Submit LIMB Message (global)         [payed]
+  - [X] Chapter 54	 transferFunds (global)
+  - [n] Chapter 55	 Update Payment Card (global)         [payed]
+  - [X] Chapter 56	 viewProfile (global)
+  - [n] Chapter 57	 View Profile V2 (global)             [payed]
+  - [n] Chapter 58	 View Refer And Earn(global)
+  - [n] Chapter 59	 Withdraw To Payment Card (global)    [payed]
+
+
+
+
