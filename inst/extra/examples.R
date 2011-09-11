@@ -1,14 +1,3 @@
-library(RCurl)
-library(XML)
-setwd("~/Dropbox/works/betfair/betfairly/R/")
-source("betfair.R")
-source("classes.R")
-source("funcs.R")
-load("../../sysdata.rda")
-## options(bfCurlOpts =
-##         list(## cainfo = "c:\\pkg\\R\\R-2.13\\library\\RCurl\\CurlSSL\\cacert.pem",
-##              ssl.verifypeer = FALSE))
-
 
 bfLogin("username", "password")
 bfSessionToken()
@@ -41,7 +30,7 @@ getMarket("102902130")
 length(getMarket("102902130")@runners) == 0L
 getMarket(mt)
 ## any event id from hierarchy
-## getEvents(2022802)
+getEvents(2022802)
 
 getMarketInfo("102759800")
 getMarketInfo(mt)

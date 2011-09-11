@@ -7,7 +7,7 @@
 setwd("../..") ## parent of betfairly dir
 getwd()
 .build_sysdata()
-system("cp types_data.rda betfairly/inst/extdata/")
+## system("cp types_data.rda betfairly/inst/extdata/")
 library(roxygen)
 
 options(width = 80)
@@ -16,7 +16,7 @@ roxygenize("betfairly", "betfairly.roxygen", use.Rd2 = T)
 ## roxygen2:::roxygenize("betfairly", "betfairly.roxygen")
 ## system("rm betfairly.roxygen.pdf")
 ## system("R CMD Rd2pdf betfairly.roxygen")
-## system("cp sysdata.rda betfairly.roxygen/R/")
+system("cp sysdata.rda betfairly.roxygen/R/")
 ## system("rm betfairly.roxygen/R/sysdata.rda")
 ## system("R CMD check betfairly.roxygen")
 ## tools::showNonASCII(readLines("./betfairly/R/betfair.R"))
@@ -128,7 +128,7 @@ sdf
     for(nm in tnames)
         .request_strings[[nm]] <- names(ExUK@types[[2]][[nm]]@type@slotTypes)
 ### SAVE
-    save( .bfServers,
+    save(.bfServers,
          .bfOperations,
          ReservedSlotNames, .request_strings,
          defaultSimpleBFConverters,
