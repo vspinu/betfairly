@@ -10,7 +10,7 @@ load("../../sysdata.rda")
 ##              ssl.verifypeer = FALSE))
 
 
-bfLogin("vitoshka", "vit0sc0nt17")
+bfLogin("username", "password")
 bfSessionToken()
 print(keepAlive())
 bfLogout()

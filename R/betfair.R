@@ -1,10 +1,13 @@
-##' The \code{betfairly} package allows to access most of the  Betfair \href{https://docs.developer.betfair.com/betfair/}{API} directly from R.
+##' The \code{betfairly} package allows to access most of the  Betfair
+##' \href{https://docs.developer.betfair.com/betfair/}{API} directly from R.
 ##'
 ##' For the list of all implemented functions and the details of the current
 ##' development status please see
-##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo}.
+##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/extra/todo.org}{todo}.
 ##'
 ##' If a particular functionality that you need is missing,  please contact the author.
+##'
+##' For examples of usage see \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/extra/examples.R}{here}.
 ##'
 ##' \bold{Table of most common functions:}
 ##'
@@ -67,6 +70,19 @@
 ##' \code{curlOpts} parameter which is passed directly to
 ##' \code{\link{curlPerform}},  see the documentation of that function for
 ##' details.
+##' }
+##'
+##' \section{Reporting Bugs}{Before reporting bugs please see the relevant
+##' section in the official Betfair
+##' \href{https://docs.developer.betfair.com/betfair/}{documentation} and ensure
+##' it's not a betfair service issue. Known isssues are documented for each
+##' Betfair API action.}
+##'
+##' \section{Disclaimer}{ The betfairly package is provided with
+##' absolutely no warranty. The documentation of the functional API is an
+##' adapted and abbreviated version of official Betfair
+##' \href{https://docs.developer.betfair.com/betfair/}{documentation}. Please
+##' refer to it for the complete reference.
 ##' @name betfairly-package
 ##' @docType package
 ##' @title Access Betfair API from R
