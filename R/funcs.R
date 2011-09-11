@@ -78,7 +78,7 @@ bfRequest <- function(mess, action, header,
             cOpts <- getOption("bfCurlOpts")
             cOpts[names(curlOpts)] <- curlOpts
         }else getOption("bfCurlOpts")
-    cat(mess, "\n####### ------ ###### \n")
+    ## cat(mess, "\n####### ------ ###### \n")
     curlPerform(postfields = mess,
                 writeFunction = bodyDataFun$update,
                 headerFunction = headerDataFun$update,
@@ -97,9 +97,9 @@ bfRequest <- function(mess, action, header,
         stop(e)
     }
     ret_node <- parseSOAP(content)
-    serv_err <- xmlValue(ret_node[[1]][["errorCode"]])
-    err <- xmlValue(ret_node[[1]][["header"]][["errorCode"]])
-    .sessionToken <<- xmlValue(ret_node[[1]][["header"]][["sessionToken"]])
+    serv_err <- xmlValue(ret_node[[1L]][["errorCode"]])
+    err <- xmlValue(ret_node[[1L]][["header"]][["errorCode"]])
+    .sessionToken <<- xmlValue(ret_node[[1L]][["header"]][["sessionToken"]])
     if(err != "OK"){
         e <- simpleError(paste("BF API error occurred: ", serv_err, " - ", err), match.call())
         e$bfAPIError <- err
@@ -107,14 +107,14 @@ bfRequest <- function(mess, action, header,
         class(e) <- c("bfError", class(e))
         stop(e)
     }
-    if(!is.na(serv_err) && serv_err != "OK"){
-        warning("BF service error occurred: ", serv_err)
-        ## if(serv_err == "NO_RESULTS" && err == "OK")
-        ##     return(NULL)
-    }
+    ## if(!is.na(serv_err) && serv_err != "OK"){
+    ##     warning("BF service error occurred: ", serv_err)
+    ##     ## if(serv_err == "NO_RESULTS" && err == "OK")
+    ##     ##     return(NULL)
+    ## }
     ## print(ret_node)
-    cat("######  responce end ####\n")
-    ret_node[[1]]
+    ## cat("######  responce end ####\n")
+    ret_node[[1L]]
 }
 
 bfCollapseParams <- function(parameters = list()){
@@ -359,7 +359,7 @@ bfArrayToDataFrame2 <- function(x, ...){
             warning("Don't understand the SOAP type `", type, "' yet")
             xmlValue(node)
         }else{
-            print(node)
+            ## print(node)
             func(xmlValue(node))
         }
     }
@@ -383,9 +383,10 @@ bfArrayToDataFrame2 <- function(x, ...){
 ##'
 ##' \code{   bfInitClasses()}
 ##'
-##' You need \code{'XMLSchema'} package for this.
+##' You need \code{XMLSchema} package for this.
 ##'
-##' Once installed,  you can use \code{str(getClass(foo))} to view the strucutre of class \code{'foo'}.
+##' Once installed,  you can use \code{str(getClass(foo))} to view the strucutre
+##' of class \code{'foo'}.
 ##'
 ##' }
 ##' \section{\strong{Methods}}{ \describe{
@@ -428,7 +429,6 @@ bfArrayToDataFrame2 <- function(x, ...){
 ##' @seealso \code{'\link{betfairly-package}'} \code{'\link{bfInitClasses}'}
 ##' @references https://docs.developer.betfair.com/betfair/
 ##' @author Vitalie Spinu
-##' @docType methods
 ##' @keywords internal methods
 setGeneric("fromBFXML",
            function(node,  obj,  type = NULL, converters = list(), forceList = FALSE)
@@ -719,126 +719,27 @@ bfGenerateClasses <- function(types, verbose = FALSE, where = .GlobalEnv){
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' install.packages("XMLSchema")  ## windows binaries
+##' install.packages("XMLSchema", repos = "http://www.omegahat.org/R")  ## windows binaries?
 ##' install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type = "source")  ## from source
 ##' bfInitClasses()
 ##' }
 ##'
 bfInitClasses <- function(verbose = FALSE, where = .GlobalEnv){
     if(!require(XMLSchema))
-        stop("You need to install the package XMLSchema\n Try install.packages(XMLSchema, repos = 'http://www.omegahat.org/R', type = 'source')")
+        stop("You need to install the XMLSchema package from omegahat.\n Try install.packages('XMLSchema', repos = 'http://www.omegahat.org/R', type = 'source')")
+    load(paste(.path.package("betfairly"), "/extdata/types_data.rda", sep = ""))
+    ## write(getURI("https://api.betfair.com/global/v3/BFGlobalService.wsdl"), tmp <- tempfile())
+    ## Gl <- processWSDL(tmp)
+    ## cat("Processing AU BFExchangeService.wsdl\n")
+    ## write(getURI("https://api-au.betfair.com/exchange/v5/BFExchangeService.wsdl"), tmp <- tempfile())
+    ## ExAU <- processWSDL(tmp)
+    ## cat("Processing BFExchangeService.wsdl\n")
+    ## write(getURI("https://api.betfair.com/exchange/v5/BFExchangeService.wsdl "),tmp <- tempfile())
+    ## ExUK <- processWSDL(tmp)
+### CLASSES
     bfGenerateClasses(Gl_types, verbose = verbose)
     bfGenerateClasses(ExUK_types, verbose = verbose)
 }
-
-
-### PACKAGE BUILD UTILITY
-.build_sysdata <- function(file = "sysdata.rda"){
-    ## used to prepare sysdata.rda,  an utility function
-    ## library(SSOAP)
-    library(RCurl)
-    library(XML)
-    library(XMLSchema)
-    .makeBFServer <- function(sdesc){
-        ##make name-spaces to be used in messages; sdesk is a server Description as returned by processWSDL in SSOAP package
-        name <- sdesc@name
-        prefix <- tolower(substring(name, 1, 4))
-        url <- SSOAP:::toURL(sdesc@server)
-        types_urls <- names(sdesc@types)
-        is_type <- grepl("types", types_urls, fixed = T)
-        stopifnot(sum(is_type) == 1L && sum(!is_type) == 1L)
-        main_nspace <- types_urls[!is_type]
-        types_nspace <- types_urls[is_type]
-        ns <- sprintf("xmlns:%s='%s'", prefix, main_nspace)
-        tp <- sprintf("xmlns:tp='%s'", types_nspace )
-        list(name = name, url = url,
-             main_nspace = main_nspace,
-             types_nspace = types_nspace,
-             prefix = prefix, ns = ns, tp = tp)
-    }
-
-###  WSDL
-    ## write(getURI("https://api.betfair.com/global/v3/BFGlobalService.wsdl"), "BFGlobalService.wsdl")
-    ## write(getURI("https://api-au.betfair.com/exchange/v5/BFExchangeService.wsdl"), "BFExchangeServiceAU.wsdl")
-    ## write(getURI("https://api.betfair.com/exchange/v5/BFExchangeService.wsdl "), "BFExchangeService.wsdl")
-    Gl <- processWSDL("BFGlobalService.wsdl")
-    ExUK <- processWSDL("BFExchangeService.wsdl")
-    ExAU <- processWSDL("BFExchangeServiceAU.wsdl")
-    ## glcls <- new.env(parent = globalenv())
-    ## glenv <- new.env(parent = glcls)
-    ## ## gl <- genSOAPClientInterface(, Gl, verbose = F, env = glenv, where = glcls, force = T)
-    ## excls <- new.env(parent = globalenv())
-    ## exenv <- new.env(parent = excls)
-    ## ex <- genSOAPClientInterface(, ExUK, verbose = F, env = exenv, where = excls, force = T)
-
-### CLASSES
-    ## Gl_env <- new.env()
-    ## ExUK_env <- new.env()
-    ## Gl_classes <- defineClasses(Gl@types, where = Gl_env, verbose = TRUE, force = TRUE)
-    ## ExUK_classes <- defineClasses(ExUK@types, where = ExUK_env, verbose = TRUE, force = TRUE)
-    Gl_types <- Gl@types
-    ExUK_types <- ExUK@types
-    ExAU_types <- ExAU@types
-### .bfServers
-    .bfServers <- list()
-    .bfOperations <- new.env(hash = TRUE)
-    ExUK@name <- paste("UK", ExUK@name, sep = "")
-    ExAU@name <- paste("AU", ExAU@name, sep = "")
-    .bfServers[c(Gl@name, ExUK@name, ExAU@name)]  <- list(.makeBFServer(Gl), .makeBFServer(ExUK), .makeBFServer(ExAU))
-    ## unprefixed
-    invisible(lapply(Gl@operations, function(el)
-                     lapply(names(el), assign, Gl@name, envir = .bfOperations)))
-    invisible(lapply(ExUK@operations, function(el)
-                     lapply(names(el),  assign, ExUK@name, envir = .bfOperations))) ## uk functions withoug prefix
-    ## UK prefix
-    invisible(lapply(Gl@operations, function(el)
-                     lapply(paste("UK", names(el), sep = ""), assign, Gl@name, envir = .bfOperations)))
-    invisible(lapply(ExUK@operations, function(el)
-                     lapply(paste("UK", names(el), sep = ""),  assign, ExUK@name, envir = .bfOperations))) ## uk with prefix
-    ## AU prefix
-    invisible(lapply(Gl@operations, function(el)
-                     lapply(paste("AU", names(el), sep = ""), assign, Gl@name, envir = .bfOperations)))
-    invisible(lapply(ExAU@operations, function(el)
-                     lapply(paste("AU", names(el), sep = ""), assign, ExAU@name, envir = .bfOperations)))
-
-### DEFAULT CONVERTERS
-    ReservedSlotNames <- XMLSchema:::ReservedSlotNames
-    defaultSimpleBFConverters <- list2env(XMLSchema:::SchemaPrimitiveConverters, hash = T, parent = emptyenv())
-    defaultStructBFConverters <- new.env(parent = emptyenv())
-    allBFTypes <- unlist(c(lapply(Gl@types, names), lapply(ExUK@types, names)), use.names= F)
-    character_converters <- c("xsd:long",  "xsd:dateTime", paste("n2:", grep("Enum$", allBFTypes, value = T), sep = ""))
-    ## "n2:MarketStatusEnum",
-    ## "n2:MarketTypeEnum", "n2:MarketTypeVariantEnum", "n2:MarketTypeVariantEnum",
-    ## "n2:BetTypeEnum", "n2:GetEventsErrorEnum", "n2:APIErrorEnum")
-    identity <- function(x) x
-    environment(identity) <- defaultSimpleBFConverters
-    for(nm in character_converters)
-        defaultSimpleBFConverters[[nm]] <- identity
-    na_converters <- paste("n2:", grep("^Array", allBFTypes, value = T), sep = "")
-    ## c("n2:ArrayOfRunnerPrices", "n2:ArrayOfEventId", "n2:ArrayOfPrice", "n2:ArrayOfRunner",
-    ##   "n2:ArrayOfMarketSummary", "n2:ArrayOfCouponLinks")
-    for(nm in na_converters)
-        defaultSimpleBFConverters[[nm]] <- function(x, ...) if(nzchar(x)) x else NA
-
-### request strings KLUDGE: getAccountStatement uses req instead of request.
-    .request_strings <- new.env(parent = emptyenv())
-    tnames <- names(Gl@types[[2]])
-    tnames <- tnames[-grep("Response$", tnames)]
-    for(nm in tnames)
-        .request_strings[[nm]] <- names(Gl@types[[2]][[nm]]@type@slotTypes)
-    tnames <- names(ExUK@types[[2]])
-    tnames <- tnames[-grep("Response$", tnames)]
-    for(nm in tnames)
-        .request_strings[[nm]] <- names(ExUK@types[[2]][[nm]]@type@slotTypes)
-
-### SAVE
-    save(.bfServers, .bfOperations,
-         Gl_types, ExUK_types, ExAU_types,
-         ReservedSlotNames, .request_strings,
-         defaultSimpleBFConverters, defaultStructBFConverters,
-         file = file, compress = "bzip2")
-}
-
 
 
 

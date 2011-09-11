@@ -38,7 +38,8 @@ setClass("bfSimpleOutput",
          representation = representation(
            bfType = "character",
            errorCode = "characterOrLogical",
-           minorErrorCode = "characterOrLogical"))
+           minorErrorCode = "characterOrLogical"),
+         prototype = prototype(errorCode = NA, minorErrorCode = NA))
 
 
 ##' \code{bfSimpleOutputDF} is an S4 data.frame containing betfair tabular output.
@@ -131,7 +132,8 @@ eval({
 
     ## DF classes
     dfc <- c("GetEventTypes", "GetAllMarkets", "GetMUBets", "GetMUBetsLite",
-             "PlaceBets", "CancelBets", "CancelBetsByMarket", "UpdateBets", "GetSubscriptionInfo")
+             "PlaceBets", "CancelBets", "CancelBetsByMarket", "UpdateBets", "GetSubscriptionInfo",
+             "GetAccountStatement")
     for(nm in dfc)
         setClass(paste(nm, "RespSimpleDF", sep = ""), contains = "bfSimpleOutputDF")
 })
@@ -170,22 +172,24 @@ eval({
                   cat("List of class '", class(object), "' (errorCode - ", object@errorCode, "):\n\n", sep="")
                   snames <- slotNames(object)
                   ordinnames <- !snames %in% c(".Data", "names", "bfType", "errorCode", "minorErrorCode")
-                  if(length(object@.Data))
+                  if(length(object@.Data)){
                       str(structure(object@.Data, names = object@names), no.list=T)
+                      cat("\n")
+                  }
                   for(nm in snames[ordinnames]){
-                      cat("\n+@", nm, ":\n", sep = "")
+                      cat("+@", nm, ":\n", sep = "")
                       print(slot(object, nm))
                   }
               }
           )
     setMethod("show", "bfSimpleOutputDF",
               function(object){
-                  cat("Data frame of class '", class(object), "' (errorCode - ", object@errorCode, "):\n\n", sep="")
+                  cat("Data.frame of class '", class(object), "' (errorCode - ", object@errorCode, "):\n\n", sep="")
                   snames <- slotNames(object)
                   ordinnames <- !snames %in% c(".Data", ".S3Class", "row.names", "names", "bfType", "errorCode", "minorErrorCode")
                   print(S3Part(object, strict = TRUE))
                   for(nm in snames[ordinnames]){
-                      cat("\n+@", nm, ":\n", sep = "")
+                      cat("+@", nm, ":\n", sep = "")
                       print(slot(object, nm))
                   }
               }

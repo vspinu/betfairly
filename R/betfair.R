@@ -1,7 +1,12 @@
 ##' The \code{betfairly} package allows to access most of the  Betfair \href{https://docs.developer.betfair.com/betfair/}{API} directly from R.
 ##'
+##' For the list of all implemented functions and the details of the current
+##' development status please see
+##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo}.
 ##'
-##' Table of most common functions:
+##' If a particular functionality that you need is missing,  please contact the author.
+##'
+##' \bold{Table of most common functions:}
 ##'
 ##' \tabular{ll}{
 ##' \bold{If you want to:} \tab \bold{Use:}\cr
@@ -19,14 +24,10 @@
 ##' Check if a market is in-play now \tab \code{\link{getMarketPricesCompressed}}\cr
 ##' Check if a market is due to be turned in-play\tab \code{\link{getAllMarkets}}\cr
 ##' Retrieve a list of Settled bets \tab \code{\link{getBetHistory}}\cr
-##' Retrieve your P&L for a market \tab \code{\link{getMarketProfitandLoss}}
+##' Retrieve your P&L for a market \tab \code{\link{getMarketProfitAndLoss}}
 ##' }
 ##'
-##' For the list of all implemented functions and the details of the current
-##' development status please see
-##' \href{https://code.google.com/p/betfairly/source/browse/trunk/inst/todo.org}{todo}.
 ##'
-##' If a particular functionality that you need is missing,  please contact the author.
 ##'
 ##' For a description of payed and free access types see
 ##' \url{http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64}.
@@ -49,11 +50,12 @@
 ##'
 ##' \item{\code{list}}{recursive list mirroring the structure of the node}
 ##'
-##' \item{\code{S4}}{S4 object as described by the service SOAP protocol. Note what
-##' you will need \code{XMLSchema} package for the S4 conversion to work,
-##' as it defines some  classes which are not provided with \code{betfairly} package} }
+##' \item{\code{S4}}{S4 object as described by the service SOAP protocol. Note
+##' what you will need \code{XMLSchema} package for the S4 conversion to work,
+##' as it defines some  classes which are not provided with \code{betfairly}
+##' package. See \code{\link{bfInitClasses}} for further instructions. }
 ##'
-##' }
+##' }}
 ##'
 ##' \section{Betfair exchange servers}{ Functions to betfair exchange services
 ##' accept a \code{server} parameter, which can be either "GB" (the default)
@@ -71,7 +73,7 @@
 ##' @author Vitalie Spinu \email{spinuvit@@gmail.com}
 ##' @keywords package betfair api
 ##' @seealso \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}\cr
+##' @references \url{http://code.google.com/p/betfairly/}, \url{https://docs.developer.betfair.com/betfair/}\cr
 ##' \href{https://bdp.betfair.com/index.php?option=com_weblinks&task=view&catid=59&id=29}{Betfair API Quick Start}
 NULL
 
@@ -114,19 +116,25 @@ NULL
 ##' bfLogout(curlOpts = list())
 ##' keepAlive(curlOpts = list())
 ##' bfSessionToken()
-##' bfSessionHandler()
+##' sh <- bfSessionHandler()
 ##' @param username The username with which to login to the API for a new session.
 ##' @param password The password with which to login to the API for a new session.
 ##' @param productId The API product ID with which to login to the API for a new
 ##' session. If you want to use the Free Access API, use 82. If you are a paying
 ##' API subscriber, use the Id provided when you signed up.
-##' @param ipAddress
-##' @param locationId
-##' @param vendorSoftwareId
-##' @param curlOpts
+##' @param ipAddress For applications that proxy the user's connection, the IP
+##' address of the user's computer. Betfair may inform you in the future if you
+##' need to provide this field, otherwise set this field to 0 (the default).
+##' @param locationId The location ID with which to login for a new session.
+##' @param vendorSoftwareId The vendor software ID with which to login to the
+##' API for a new session. This is only relevant for software vendors and is
+##' provided when software vendors sign up.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return invisibly a sessionToken string
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export bfLogin bfLogout keepAlive bfSessionHandler bfSessionToken
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 bfLogin <- function(username, password, productId = 82L, ipAddress = "0", locationId = 0L, vendorSoftwareId = 0L,
@@ -183,12 +191,15 @@ bfSessionHandler <- function(){
 ##' @rdname BF_Events
 ##' @aliases >BF_Events getAllEventTypes
 ##' @title Betfair Events
-##' @param locale
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return A data frame with columns id nextMarketId  and exchangeId; an  xml node or S4 object,  as specified by the \code{output} parameter
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}} \code{\link{getActiveEventTypes}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getAllEventTypes <- function(locale,
@@ -213,9 +224,13 @@ getAllEventTypes <- function(locale,
 ##' EURO 2004 after those events had finished.
 ##'
 ##' @rdname BF_Events
-##' @param locale
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different
+##' language than the account default.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return A data frame with columns id, nextMarketId and exchangeId; an xml node or an S4 object,  as specified by the \code{output} parameter
 ##' @note The GetActiveEventTypes service is a global service, and it returns information about the events
 ##' available on both the UK and the Australian exchange servers.
@@ -257,9 +272,12 @@ getActiveEventTypes <- getAllEventTypes
 ##' an array of eventTypeItems returned by GetAllEventTypes or
 ##' GetActiveEventTypes), or it is an eventId for a single eventItem (in an array
 ##' of eventItems returned by an earlier GetEvents request).
-##' @param locale
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetEventsRespSimple} which inherits from
 ##' \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}} class. With slots
 ##' \code{eventItems} and \code{marketItems} which are data.frames.
@@ -281,7 +299,6 @@ getEvents <- function(eventParentId = 1L, locale,
 
 
 #### GET MARKETS
-
 ##' Functions to retrieve information about Betfair markets.
 ##'
 ##' Retrieve information about all of the markets that are currently
@@ -294,7 +311,8 @@ getEvents <- function(eventParentId = 1L, locale,
 ##' @rdname BF_Markets
 ##' @aliases >BF_Markets getAllMarkets
 ##' @title Betfair markets
-##' @param eventTypeIds
+##' @param eventTypeIds A vector with the events ids to return. If not
+##' specified, markets from all event types are returned.
 ##' @param countries The countries where the event is taking place as an array
 ##' of ISO3 country codes. If not specified, markets from all countries (or
 ##' international markets) for the specified exchange are returned.
@@ -305,13 +323,17 @@ getEvents <- function(eventParentId = 1L, locale,
 ##' @param toDate Any R date-time object or  string recognized by
 ##' as.POSIXlt. If this is set, the response contains only markets where the
 ##' market time is not after the specified date. No limit if not specified.
-##' @param locale
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return A data.frame containing one market per row and a character string if \code{output = "S4"}.
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getAllMarkets <- function(eventTypeIds, countries, fromDate, toDate, locale,
@@ -353,12 +375,18 @@ getAllMarkets <- function(eventTypeIds, countries, fromDate, toDate, locale,
 ##' GetEvents command.
 ##'
 ##' @rdname BF_Markets
-##' @param marketId
-##' @param includeCouponLinks
-##' @param locale
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketId Integer specifying the market ID.
+##' @param includeCouponLinks If you set this parameter to true, the service
+##' response contains a list of any coupons that include the market you have
+##' requested. If you set the parameter to FALSE (the default), no coupon data is returned.
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketRespSimple} which inherits from
 ##' \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}} class. Additional slot
 ##' \code{runners} contains a data frame of event participants.
@@ -385,10 +413,14 @@ getMarket <- function(marketId, includeCouponLinks = FALSE, locale = "en",
 ##' command. This is a lite service to compliment the GetMarket service.
 ##'
 ##' @rdname BF_Markets
-##' @param marketId
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketId Integer specifying the market ID.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketInfoRespSimple} which inherits from
 ##' \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}} class and has no extra slots.
 ##'
@@ -408,14 +440,18 @@ getMarketInfo <- function(marketId,
 ##'
 ##' Obtain all the current odds and matched amounts on a single runner in a particular event.
 ##' @rdname BF_Markets
-##' @param marketId
-##' @param selectionId
+##' @param marketId Integer specifying the market ID.
+##' @param selectionId The desired runner id.
 ##' @param asianLineId Mandatory if the market specified by Market ID is an
 ##' Asian Market, otherwise optional
-##' @param currencyCode
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param currencyCode Three letter ISO 4217 code.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketTradedVolumeRespSimple} with a slot
 ##' \code{priceItems} containing a data frame of  total match volumes for each odd.
 ##' @export
@@ -433,11 +469,15 @@ getMarketTradedVolume <- function(marketId,  selectionId, asianLineId, currencyC
 ##'
 ##' Obtain the current price (odds) and matched amounts at each price on all of the runners in a particular market.
 ##' @rdname BF_Markets
-##' @param marketId
-##' @param currencyCode
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketId Integer specifying the market ID.
+##' @param currencyCode Three letter ISO 4217 code.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketTradedVolumeCompressedRespSimple}
 ##' with two additional slots \code{runners} and \code{volumes}.
 ##' @export
@@ -452,7 +492,6 @@ getMarketTradedVolumeCompressed <- function(marketId, currencyCode,
 
 
 #### GET PRICES
-
 ##' Functions to retrieve prices on Betfair markets.
 ##'
 ##' Retrieve all back and lay stakes for each price on the exchange for a given
@@ -463,15 +502,19 @@ getMarketTradedVolumeCompressed <- function(marketId, currencyCode,
 ##' @rdname BF_Prices
 ##' @aliases >BF_Prices getCompleteMarketPricesCompressed
 ##' @title Prices on betfair markets.
-##' @param marketId
-##' @param currencyCode
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketId Integer specifying the market ID.
+##' @param currencyCode Three letter ISO 4217 code.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return a character of length 1 representing the compressed output (simple
-##' output is not implemented yet)
+##' output is not implemented yet todo::)
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}} \code{\link{getActiveEventTypes}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getCompleteMarketPricesCompressed <- function(marketId, currencyCode = "EUR",
@@ -490,9 +533,13 @@ getCompleteMarketPricesCompressed <- function(marketId, currencyCode = "EUR",
 ##' @param marketId integer ID of the required market
 ##' @param currencyCode character  Three letter ISO 4217 code. If not supplied,
 ##' users currency is used
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{"GetMarketPricesRespSimple"} with a slot
 ##' \code{runnerPrices} containing a data frame of back and lay prices for each
 ##' runner. This function returns the same information as
@@ -502,7 +549,7 @@ getMarketPrices <- function(marketId, currencyCode,
                             server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     call <- match.call()
     call[["marketId"]] <- as.integer(marketId)
-    res <- bfGenericRequest(call)[[1L]]
+    res <- bfGenericRequest(call)
     returnBFOutput(res, output, data_slots="runnerPrices", simpleNode = "marketPrices",
                    converters= list(
                      `n2:ArrayOfPrice`= bfArrayToDataFrame2,
@@ -538,11 +585,15 @@ getMarketPrices <- function(marketId, currencyCode,
 ##' returns it in a ~ (tilde) delimited String.
 ##'
 ##' @rdname BF_Prices
-##' @param marketId
-##' @param currencyCode
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketId Integer specifying the market ID.
+##' @param currencyCode Three letter ISO 4217 code.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketPricesCompressedRespSimple} containing slots \code{runners} and \code{prices}.
 ##' @export
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
@@ -557,7 +608,6 @@ getMarketPricesCompressed <- function(marketId, currencyCode,
 
 
 #### BET HISTORY:
-
 ##' With \code{getBetHistory}, \code{getMUBets} and \code{getMUBetsLite} you
 ##' access information about all your bets.  With getBet, getBetLite and
 ##' getBetMatchesLite you can access detailed information about your specific
@@ -572,15 +622,19 @@ getMarketPricesCompressed <- function(marketId, currencyCode,
 ##' @title Access your bets
 ##' @rdname BF_Bet_History
 ##' @param betId The unique bet identifier
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return A list of class \code{GetBetRespSimple} containing slot
 ##' \code{matches} with info  about matched portions of the bet.
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getBet <- function(betId,
                    server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     out <- .bfRequestInternal(betId = betId, operation = "getBet", curlOpts = curlOpts, server = server)
@@ -592,10 +646,14 @@ getBet <- function(betId,
 ##'
 ##' This is the lite version of the GetBet service.
 ##' @rdname BF_Bet_History
-##' @param betId
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param betId The unique bet identifier
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return A list of class \code{GetBetLiteRespSimple} with no additional
 ##' slots.  Contains a subset of information from data part of \code{getBet}
 ##' response.
@@ -611,16 +669,20 @@ getBetLite <- function(betId,
 ##'
 ##' This is a lite version of the GetBet service that returns information on matched bets.{
 ##' @rdname BF_Bet_History
-##' @param betId
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param betId The unique bet identifier
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Data frame of class \code{GetBetMatchesLiteRespSimple} containing
 ##' subset of information from \code{@@matches} slot in \code{getBet} response.
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getBetMatchesLite <- function(betId,
                               server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     out <- .bfRequestInternal(betId = betId, operation = "getBetMatchesLite", curlOpts = curlOpts, server = server)
@@ -672,14 +734,18 @@ getBetMatchesLite <- function(betId,
 ##' response was generated. If false, all bets are returned. Therefore, you may
 ##' receive a response that indicates an unmatched bet that has actually been
 ##' matched during the time taken for the API to respond.
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{xxx} containing slot
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getMUBets <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy = "BET_ID",
                       sortOrder = "ASC", recordCount = 200, startRecord = 0, excludeLastSecond = FALSE,
                       server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
@@ -705,8 +771,12 @@ getMUBets <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy 
 ##'
 ##' This is a lite version of the getMUBets service.
 ##' @rdname BF_Bet_History
-##' @param marketId
-##' @param betIds
+##' @param marketId Integer specifying the market ID.
+##' @param betIds A vector specifying the betId of each bet you want
+##' returned. The maximum number of bets you can include in the array is 200. If
+##' you include marketId in the request and marketId contains a non-zero value,
+##' then betIds is ignored. If you specify a betId, then you must specify MU for
+##' betStatus.
 ##' @param betStatus
 ##' @param matchedSince
 ##' @param orderBy
@@ -714,9 +784,13 @@ getMUBets <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy 
 ##' @param recordCount
 ##' @param startRecord
 ##' @param excludeLastSecond
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @export
 getMUBetsLite <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy = "BET_ID",
                           sortOrder = "ASC", recordCount = 200, startRecord = 0, excludeLastSecond = FALSE,
@@ -737,7 +811,7 @@ getMUBetsLite <- function(marketId, betIds, betStatus = "MU", matchedSince, orde
 ##'
 ##'
 ##' @rdname BF_Bet_History
-##' @param marketId
+##' @param marketId Integer specifying the market ID.
 ##' @param eventTypeIds An array of event types to return. For matched and
 ##' unmatched bets only, you can leave it unspecified  and specify zero (the default) as the
 ##' marketId to receive records of all your bets on the exchange.
@@ -761,11 +835,15 @@ getMUBetsLite <- function(marketId, betIds, betStatus = "MU", matchedSince, orde
 ##' @param startRecord The first record number to return (supports
 ##' paging). Record numbering starts from 0. For example, to retrieve the third
 ##' record and higher, set startRecord to 2.
-##' @param locale
-##' @param timezone
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param timezone Specify an alternative time-zone from the user account default.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetBetHistoryRespSimple} containing slots
 ##' \code{betHistoryItems} - a data frame with one  bet per row  and
 ##' \code{matches} - a data frame with all the matches if the \code{details}
@@ -799,17 +877,22 @@ getBetHistory <- function(marketId = 0, eventTypeIds = NULL, detailed = FALSE, s
 ##'
 ##'    * The calculation for AH markets will include worstCaseIfWin but not futureIfWin.
 ##' @rdname BF_Bet_History
-##' @param marketID
+##' @param marketID The market ID for which the profit and loss for the user is
+##' to be returned
 ##' @param includeSettledBets logical If TRUE then the P&L calculation for each runner
 ##' includes any profit and loss from any bets on runners that have already been
 ##' settled. The default is FALSE, which matches the default on Betfair.com.
 ##' @param includeBspBets If TRUE, BSP bets are returned as part of the P&L
 ##' @param netOfCommission If TRUE return P&L net of users current commission rate
 ##' for this market including any special tariffs, default is FALSE.
-##' @param locale
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketProfitAndLossRespSimple} containing slot \code{annotations} which is a data frame with P&L data.
 ##' @export
 getMarketProfitAndLoss <- function(marketID, includeSettledBets = FALSE,  includeBspBets = TRUE,   netOfCommission = FALSE, locale,
@@ -849,8 +932,8 @@ getMarketProfitAndLoss <- function(marketID, includeSettledBets = FALSE,  includ
 ##' @title Functions to place, update and cancel bets.
 ##' @rdname BF_Bet_Placement
 ##' @aliases >BF_Bet_Placement bfBet
-##' @param marketId
-##' @param selectionId
+##' @param marketId Integer specifying the market ID.
+##' @param selectionId  ID of the desired runner or selection within the market
 ##' @param price numeric  The price (odds) you want to set for the bet. Valid
 ##' values are 1.01 to 1000. For a BSP Limit on Close bet, specify the desired
 ##' price limit. For a Back bet, the minimum price you want. If the Starting
@@ -871,7 +954,8 @@ getMarketProfitAndLoss <- function(marketID, includeSettledBets = FALSE,  includ
 ##' equivalent to the stake on a normal exchange bet. For a lay bet, this is the
 ##' equivalent to the liability on a normal exchange bet. If after the market is
 ##' reconciled, the actual stake is calculated once the price is known.
-##' @param server
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
 ##' @param betCategoryType E, M or L. 'E' - Exchange bet, 'M' - Market on
 ##' Close SP bet, 'L' - Limit on Close SP bet. If you specify Limit on Close,
 ##' specify the desired limit using the price argument. See details.
@@ -883,9 +967,10 @@ getMarketProfitAndLoss <- function(marketID, includeSettledBets = FALSE,  includ
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 bfBet <- function(marketId, selectionId, price, size, betType = "B", bspLiability = 0.0,
-                  server = getOption("bfServer"), betCategoryType = "E", betPersistenceType = "NONE"){
+                  betCategoryType = "E", betPersistenceType = "NONE",
+                  server = getOption("bfServer")){
     call <- match.call()
     switch(betCategoryType,
            E = call[c("betCategoryType", "price", "size", "betPersistenceType", "bspLiability")] <- c(betCategoryType, price, size, betPersistenceType, bspLiability),
@@ -962,17 +1047,21 @@ bfBet <- function(marketId, selectionId, price, size, betType = "B", bspLiabilit
 ##' @param bets For \emph{\code{placeBets}}  an \code{bfBet} object or a list (of max 60) such objects.\cr
 ##' For \emph{\code{cancelBets}}  a vector of bet ids to be canceled (max 40).\cr
 ##' For \emph{\code{updateBets}}  an \code{bfBetUpdate} object or a list (of max 15) such objects.
-##' @param marketIds
-##' @param selectionIds
-##' @param prices
-##' @param sizes
-##' @param betTypes
-##' @param bspLiabilities
-##' @param betCategoryTypes
-##' @param betPersistenceTypes
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param marketIds Vector of integers specifying the market IDs.
+##' @param selectionIds _
+##' @param prices _
+##' @param sizes _
+##' @param betTypes _
+##' @param bspLiabilities _
+##' @param betCategoryTypes _
+##' @param betPersistenceTypes _
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Data frame with info on the success of placed bets, one bet per row.
 ##' @export
 placeBets <- function(bets = list(),
@@ -999,16 +1088,19 @@ placeBets <- function(bets = list(),
 ##' already matched, cancelBets cancels the unmatched portion of the bet.
 ##' @rdname BF_Bet_Placement
 ##' @param bets
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Data frame with info on canceled bets, one bet per row.
 ##' @export
 cancelBets <- function(bets,
                        server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     stopifnot(is.vector(bets))
     out <- .bfRequestInternal(bets = asBF(bets, "ArrayOfCancelBets"), operation = "cancelBets", curlOpts = curlOpts, server = server)
-    print(out)
     returnBFOutput(out, output = output, classPostfix = "DF",
                    letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["betResults"]])))
 }
@@ -1019,10 +1111,14 @@ cancelBets <- function(bets,
 ##' one or more Markets. You might use this service to quickly close out a
 ##' position on a market.
 ##' @rdname BF_Bet_Placement
-##' @param markets
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param markets Vector of market IDs.
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{xxx} containing slot
 ##' @export
 cancelBetsByMarket <- function(markets,
@@ -1071,16 +1167,20 @@ bfBetUpdate <- function(betId, newPrice, oldPrice, newSize, oldSize,newBetPersis
 ##'
 ##' @rdname BF_Bet_Placement
 ##' @param bets Can be an \code{bfBetUpdate} object or a list (of max 15) such objects.
-##' @param betIds
-##' @param newPrices
-##' @param oldPrices
-##' @param newSizes
-##' @param oldSizes
-##' @param newBetPersistenceTypes
-##' @param oldBetPersistenceTypes
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param betIds _
+##' @param newPrices _
+##' @param oldPrices _
+##' @param newSizes _
+##' @param oldSizes _
+##' @param newBetPersistenceTypes _
+##' @param oldBetPersistenceTypes _
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Data frame with info on the success of bet updates,  one bet per row.
 ##' @export
 updateBets <- function(bets = list(), betIds, newPrices, oldPrices, newSizes, oldSizes,  newBetPersistenceTypes, oldBetPersistenceTypes,
@@ -1117,14 +1217,18 @@ updateBets <- function(bets = list(), betIds, newPrices, oldPrices, newSizes, ol
 ##' @title Account management.
 ##' @rdname BF_Acount_Management
 ##' @aliases >BF_Acount_Management getAccountFunds
-##' @param server
-##' @param output
-##' @param curlOpts
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetAccountFundsRespSimple} with no extra slots.
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getAccountFunds <- function(server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     out <- .bfRequestInternal(operation = "getAccountFunds", curlOpts = curlOpts, server = server)
     returnBFOutput(out, output = output,
@@ -1136,21 +1240,27 @@ getAccountFunds <- function(server = getOption("bfServer"), output = getOption("
 ##'
 ##' Obtain information about transactions involving your local wallet on an exchange server.
 ##' @rdname BF_Acount_Management
-##' @param startDate
-##' @param endDate
-##' @param startRecord
-##' @param recordCount
-##' @param itemsIncluded
-##' @param locale
-##' @param ignoreAutoTransfers
-##' @param server
-##' @param output
-##' @param curlOpts
-##' @return Object of class \code{GetAccountStatementRespSimple} with no extra slots.
+##' @param startDate Return records on or after this date.
+##' @param endDate Return records on or before this date.
+##' @param startRecord The first record number to return (supports
+##' paging). Record numbering starts from 0. For example, to retrieve the third
+##' record and higher, set startRecord to 2.
+##' @param recordCount The maximum number of records to return.
+##' @param itemsIncluded Determines what type of statements items to return.
+##' @param locale Specify the language for the reply if you want a different language than the account default.
+##' @param ignoreAutoTransfers _
+##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
+##' use. You can set the default with \code{options(bfServer = "AU")}.
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
+##' @return Data.frame of class \code{GetAccountStatementRespSimpleDF} with no extra slots.
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{https://docs.developer.betfair.com/betfair/}
+##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getAccountStatement <- function(startDate = Sys.Date()-1, endDate = Sys.time(),
                                 startRecord = 0, recordCount  = 100, itemsIncluded ="ALL", locale, ignoreAutoTransfers = TRUE,
                                 server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
@@ -1159,15 +1269,19 @@ getAccountStatement <- function(startDate = Sys.Date()-1, endDate = Sys.time(),
                 )
     if(!missing(locale)) req[["locale"]] <- locale
     out <- do.call(.bfRequestInternal, c(req, operation = "getAccountStatement", curlOpts = curlOpts, server = server))
-    out
+    returnBFOutput(out, output, classPostfix = "DF",
+                   letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["items"]])))
 }
 
 ##'
 ##'
 ##' Return information on your API subscription.
 ##' @rdname BF_Acount_Management
-##' @param output
-##' @param curlOpts
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{getSubscriptionInfo} with no extra slots.
 ##' @export
 getSubscriptionInfo <- function( output = getOption("bfOutput"), curlOpts = list()){
@@ -1187,14 +1301,17 @@ getSubscriptionInfo <- function( output = getOption("bfOutput"), curlOpts = list
 ##' account: one for betting on the UK exchange server and one for betting on
 ##' the Australian exchange server.
 ##' @rdname BF_Acount_Management
-##' @param amount
+##' @param amount _
 ##' @param sourceWalletId 	The wallet that you are requesting the funds to
 ##' be transferred from. There are two possible wallets: 1 = UK Sports Betting
 ##' wallet 2 = Australian Sports Betting wallet
 ##' @param targetWalletId 	The wallet that you are requesting the funds to
 ##' be transferred from.
-##' @param output
-##' @param curlOpts
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{TransferFundsRespSimple} with no extra slots.
 ##' @export
 transferFunds <- function(amount, sourceWalletId = 1,  targetWalletId = 2,
@@ -1208,8 +1325,11 @@ transferFunds <- function(amount, sourceWalletId = 1,  targetWalletId = 2,
 ##' Retrieve information about the user account, such as the registered address,
 ##' e-mail address, phone numbers, etc.
 ##' @rdname BF_Acount_Management
-##' @param output
-##' @param curlOpts
+##' @param output Indicates the form of the returned value. Can be "simple"
+##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
+##' @param curlOpts RCurl options passed directly to
+##' \code{\link{curlPerform}}. You can also set the defaults with
+##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{ViewProfileRespSimple} with not extra slots.
 ##' @export
 viewProfile <- function(output = getOption("bfOutput"), curlOpts = list()){

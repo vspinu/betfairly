@@ -8,7 +8,7 @@ Maintainer: Vitalie Spinu <spinuvit@gmail.com>
 Description: Functional inteface to the  Betfair API. The user can choose the form of the output - row XML, S4, nested list or simple R like objects ready to use in statistical processing.
 License: GPL (>= 2)
 LazyLoad: yes
-URL: https://docs.developer.betfair.com/betfair/
+URL: http://code.google.com/p/betfairly/
 Depends: R (>= 2.10), methods, RCurl, XML
 Suggests: XMLSchema
 
