@@ -705,7 +705,7 @@ bfGenerateClasses <- function(types, verbose = FALSE, where = .GlobalEnv){
 
 ##' All betfair functions are capable of producing a valid S4 object
 ##' corresponding to betfair SOAP specification. \cr For parsimony reasons the
-##' betfair S4 classes are not installed with the package. You need \code{
+##' betfair S4 classes are not installed with the package. You need to run \code{
 ##' bfInitClasses()} to initialize them. Note that \code{XMLSchema} package is
 ##' required for this initialization.
 ##'

@@ -132,7 +132,7 @@ NULL
 ##' bfLogout(curlOpts = list())
 ##' keepAlive(curlOpts = list())
 ##' bfSessionToken()
-##' sh <- bfSessionHandler()
+##' bfSessionHandler()
 ##' @param username The username with which to login to the API for a new session.
 ##' @param password The password with which to login to the API for a new session.
 ##' @param productId The API product ID with which to login to the API for a new

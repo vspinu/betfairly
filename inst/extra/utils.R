@@ -11,7 +11,7 @@ getwd()
 library(roxygen)
 
 options(width = 80)
-system("rm -r betfairly.roxygen")
+system("rm -r -f betfairly.roxygen")
 roxygenize("betfairly", "betfairly.roxygen", use.Rd2 = T)
 ## roxygen2:::roxygenize("betfairly", "betfairly.roxygen")
 ## system("rm betfairly.roxygen.pdf")
