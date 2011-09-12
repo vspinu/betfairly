@@ -378,7 +378,9 @@ getAllMarkets <- function(eventTypeIds, countries, fromDate, toDate, locale,
                        names(res) <- names(types)
                        for(nm in names(res))
                            res[[nm]] <- as(res[[nm]], types[[nm]])
-                       list(transform(res, eventDate = toBFPOSIX(eventDate), lastRefresh = toBFPOSIX(lastRefresh)))
+                       res[["eventDate"]] <- toBFPOSIX(res[["eventDate"]])
+                       res[["lastRefresh"]] <- toBFPOSIX(res[["lastRefresh"]])
+                       list(res)
                    })
 }
 ## head(getAllMarkets(1, c("GBR")))

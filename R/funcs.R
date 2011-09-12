@@ -737,12 +737,14 @@ bfInitClasses <- function(verbose = FALSE, where = .GlobalEnv){
     ## write(getURI("https://api.betfair.com/exchange/v5/BFExchangeService.wsdl "),tmp <- tempfile())
     ## ExUK <- processWSDL(tmp)
 ### CLASSES
-    bfGenerateClasses(Gl_types, verbose = verbose)
-    bfGenerateClasses(ExUK_types, verbose = verbose)
+    bfGenerateClasses(get("Gl_types"), verbose = verbose) ## get to silence the R CMD check
+    bfGenerateClasses(get("ExUK_types"), verbose = verbose)
 }
 
 
-
+.onLoad <- function(libname, pkgname){
+    assign(".sessionToken", "", envir = .GlobalEnv)
+}
 ## Local Variables:
 ## ess-roxy-template-alist: (
 ##  ("description" . "..description")

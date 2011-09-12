@@ -1,11 +1,11 @@
 Package: betfairly
 Type: Package
 Title: Access Betfair API from R
-Version: 1.0
+Version: 1.1
 Date: 2011-07-18
 Author: Vitalie Spinu <spinuvit@gmail.com>
 Maintainer: Vitalie Spinu <spinuvit@gmail.com>
-Description: Functional inteface to the  Betfair API. The user can choose the form of the output - row XML, S4, nested list or simple R like objects ready to use in statistical processing.
+Description: An R interface to the  Betfair API. The user can choose the type of output to be XML, S4 (representing native Betfair SOAP types), nested list or simplified R objects ready to be used in the statistical analysis.
 License: GPL (>= 2)
 LazyLoad: yes
 URL: http://code.google.com/p/betfairly/
