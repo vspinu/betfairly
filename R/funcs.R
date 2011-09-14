@@ -539,18 +539,22 @@ eval({
     names(runners) <- c("runner", "selectionId", "orderIndex", "totalAmountMatched", "lastPriceMatched", "handicap", "reductionFactor", "vacant", "asianLineId", "farSPPrice", "nearSPPrice", "actualSPPrice")
     for(i in c(1L, 2L, 3L, 9L))
         runners[[i]] <- as.integer(runners[[i]])
-    for(i in (1:12)[-c(1L, 2L, 3L, 8L, 9L)])
+    for(i in (1:10)[-c(1L, 2L, 3L, 8L, 9L)])
         runners[[i]] <- as.numeric(runners[[i]])
     runners[[8L]] <- as.logical(runners[[8L]])
     prices <- do.call(rbind, prices)
-    prices <- as.data.frame(prices, stringsAsFactors = FALSE)
-    names(prices) <- c("runner", "price", "backAmountAvailable", "layAmountAvailable", "totalBSPBackAvailable", "totalBSPLayAvailable")
-    for(i in 2:length(prices))
-        prices[[i]] <- as.numeric(prices[[i]])
-    prices[[1L]] <- as.integer(prices[[1L]])
+    if(is.null(prices))
+        prices <- data.frame()
+    else{
+        prices <- as.data.frame(prices, stringsAsFactors = FALSE)
+        names(prices) <- c("runner", "price", "backAmountAvailable", "layAmountAvailable", "totalBSPBackAvailable", "totalBSPLayAvailable")
+        for(i in 2:length(prices))
+            prices[[i]] <- as.numeric(prices[[i]])
+        prices[[1L]] <- as.integer(prices[[1L]])
+    }
     list(out, removedRunners = removedRunners,
-         runners = runners[order(runners[["runner"]]), ],
-         prices = prices[order(prices[["runner"]]), ])
+         runners = runners,
+         prices = prices)
 }
 
 ## getMarketPricesCompressed(nm)
