@@ -58,7 +58,14 @@
 ##' as it defines some  classes which are not provided with \code{betfairly}
 ##' package. See \code{\link{bfInitClasses}} for further instructions. }
 ##'
-##' }}
+##' }
+##'
+##' You can change the default by setting the \code{bfOutput} option:
+##'
+##' \code{options(bfOutput = "XML")}
+##'
+##' }
+##'
 ##'
 ##' \section{Betfair exchange servers}{ Functions to betfair exchange services
 ##' accept a \code{server} parameter, which can be either "GB" (the default)
@@ -529,8 +536,10 @@ getMarketTradedVolumeCompressed <- function(marketId, currencyCode,
 ##' @param curlOpts RCurl options passed directly to
 ##' \code{\link{curlPerform}}. You can also set the defaults with
 ##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
-##' @return a character of length 1 representing the compressed output (simple
-##' output is not implemented yet todo::)
+##' @return A list of class \code{GetCompleteMarketPricesCompressedRespSimple}
+##' with three additional slots containing data.frames \code{removedRunners},
+##' \code{runners} and \code{prices}. Use \code{\link{merge}} for joining these
+##' by the common field \code{runners}.
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}} \code{\link{getActiveEventTypes}}
 ##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export
@@ -538,10 +547,9 @@ getMarketTradedVolumeCompressed <- function(marketId, currencyCode,
 getCompleteMarketPricesCompressed <- function(marketId, currencyCode = "EUR",
                                               server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     res <- bfGenericRequest(match.call())
-    returnBFOutput(res,  output, letMeParseFunc = function(x) fromBFXML(x[["completeMarketPrices"]]))
+    returnBFOutput(res, output, letMeParseFunc = .simple_getCompleteMarketPricesCompresed)
 }
-## todo:
-## getCompleteMarketPricesCompressed("101513259")
+
 
 ##'
 ##'

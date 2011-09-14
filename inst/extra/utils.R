@@ -14,8 +14,7 @@ options(width = 80)
 system("rm -r -f betfairly.roxygen")
 roxygenize("betfairly", "betfairly.roxygen", use.Rd2 = T)
 ## roxygen2:::roxygenize("betfairly", "betfairly.roxygen")
-## system("rm betfairly.roxygen.pdf")
-## system("R CMD Rd2pdf betfairly.roxygen")
+system("R CMD Rd2pdf --output=betfairly_manual.pdf --force betfairly.roxygen ")
 system("cp sysdata.rda betfairly.roxygen/R/")
 ## system("rm betfairly.roxygen/R/sysdata.rda")
 ## system("R CMD check betfairly.roxygen")
@@ -24,9 +23,9 @@ system("cp sysdata.rda betfairly.roxygen/R/")
 system("rm betfairly.roxygen/R/.Rhistory")
 system("R CMD build betfairly.roxygen")
 
-system("R CMD check betfairly_1.0.tar.gz")
+system("R CMD check betfairly_1.1.tar.gz")
 
-install.packages("betfairly_1.0.tar.gz")
+install.packages("betfairly_1.1.tar.gz")
 sdf
 
 

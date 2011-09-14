@@ -104,6 +104,12 @@ eval({
                runners = "data.frame",
                prices = "data.frame"),
              contains = "bfSimpleOutputList")
+    setClass("GetCompleteMarketPricesCompressedRespSimple",
+             representation = representation(
+               removedRunners = "data.frame",
+               runners = "data.frame",
+               prices = "data.frame"),
+             contains = "bfSimpleOutputList")
     setClass("GetMarketPricesRespSimple",
              representation = representation(
                runnerPrices = "data.frame"),
@@ -178,6 +184,7 @@ eval({
                   for(nm in snames[ordinnames]){
                       cat("+@", nm, ":\n", sep = "")
                       print(slot(object, nm))
+                      cat("\n")
                   }
               }
           )
