@@ -252,18 +252,10 @@ returnBFOutput <- function(res, output, simplifun = .simplifunDefault, ...){
 ##' @return time string in appropriate format
 ##' @references http://www.w3.org/TR/xmlschema-2/#dateTime
 ##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
-asBFDateTime <- function(x, tz = "Z")
+asBFDateTime <- function(x, tz = "Z"){
     ## tz should be in format (('+' | '-') hh ':' mm) no checks
     paste(format(as.POSIXlt(x), "%FT%H:%M:%OS3"), tz, sep = "")
-
-## asBFDate <- function(x, tz = "Z"){
-##     ## tz should be in format (('+' | '-') hh ':' mm) no checks
-##     paste(format(as.POSIXlt(x), "%FT00:00:00"), tz, sep = "")
-## }
-
-##     as.POSIXct("1999-12-05 23:02:12")
-## format(as.POSIXct("1999-12-05 23:02:12"), "%FT%T%zz")
-## format(Sys.time(), "%FT%T")
+}
 
 toBFPOSIX <- function(from) as.POSIXct(as.integer(substr(from, 1, 10)), origin="1970-01-01", tz="GMT")
 toBFArray <- function(array, type, maxlength = NULL){
@@ -489,7 +481,7 @@ eval({
         for(nm in names(runners)[.runners_types != "character"])
             runners[[nm]] <- as(runners[[nm]], .runners_types[[nm]])
     }else{
-        runners <- NULL
+        runners <- data.frame()
     }
     if(length(toBack) || length(toLay)){
         prices <- as.data.frame(do.call(rbind, c(toBack, toLay)), stringsAsFactors = FALSE)
@@ -497,7 +489,7 @@ eval({
             prices[[nm]] <- as(prices[[nm]], .prices_types[[nm]])
         prices <- prices[-5L]  ## type is not needed
     }else{
-        prices <- NULL
+        prices <- data.frame()
     }
     list( runners = runners,
         prices = prices)
@@ -574,7 +566,6 @@ eval({
         if(length(sl <- sl[-1])) # otherwise null
             volumes[[i]] <- cbind(runner = i, matrix(unlist(strsplit(unlist(sl), "~", fixed = TRUE)), ncol = 2, byrow = T, dimnames = list(NULL, c("Odds", "totalMatchedAmount"))))
     }
-
     runners <- data.frame(seq_along(res), do.call(rbind, runners), stringsAsFactors = F)
     names(runners) <- c("runner", "selectionId", "asianLineId", "actualBSP", "totalBspBackMatchedAmount", "totalBspLiabilityMatchedAmount")
     for(nm in c("runner", "asianLineId", "selectionId"))
