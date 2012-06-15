@@ -178,9 +178,13 @@ bfBuildMessage <- function(operation, parameters = list(), prefix, ns, tp, sessi
 }
 
 bfGenericRequest <- function(call){
+    ## should be called by bf requests directly
+    nm <- names(call)
+    for(i in 2:length(call))
+        call[[i]] <- as.name(nm[[i]])
     call[["operation"]] <- as.character(call[[1]])
     call[[1]] <- as.name(".bfRequestInternal")
-    eval(call, parent.frame(1L))  ## always work?
+    eval(call, parent.frame(1L))  ## 
 }
 
 ## bfGenericRequest1 <- function(call){

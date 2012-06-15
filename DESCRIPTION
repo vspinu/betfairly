@@ -1,7 +1,7 @@
 Package: betfairly
 Type: Package
 Title: Access Betfair API from R
-Version: 1.12
+Version: 1.2
 Date: 2011-11-27
 Author: Vitalie Spinu <spinuvit@gmail.com>
 Maintainer: Vitalie Spinu <spinuvit@gmail.com>

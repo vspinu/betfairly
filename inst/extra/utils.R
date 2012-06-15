@@ -23,7 +23,7 @@ system("cp sysdata.rda betfairly.roxygen/R/")
 system("rm betfairly.roxygen/R/.Rhistory")
 system("R CMD build betfairly.roxygen")
 
-system("R CMD check betfairly_1.12.tar.gz")
+system("R CMD check betfairly_1.2.tar.gz")
 
 install.packages("betfairly_1.12.tar.gz")
 sdf
