@@ -132,8 +132,6 @@
   Vitalie Spinu (\email{spinuvit@gmail.com})
 
   Vitalie Spinu (\email{spinuvit@gmail.com})
-
-  Vitalie Spinu (\email{spinuvit@gmail.com})
 }
 \references{
   \url{http://code.google.com/p/betfairly/},

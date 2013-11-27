@@ -202,9 +202,6 @@
   Otherwise, the service returns all active and suspended
   markets.
 }
-\author{
-  Vitalie Spinu (\email{spinuvit@gmail.com})
-}
 \references{
   \url{http://code.google.com/p/betfairly/},
   \url{https://docs.developer.betfair.com/betfair/}

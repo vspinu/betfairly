@@ -233,7 +233,11 @@
   recycled to the same length if needed. These arguments
   are all in plural and are not documented below.
 
-  \describe{ \item{Bet Types}{
+  Place multiple (1 to 60) bets on a single Market. There
+  is an instance of PlaceBetsResp returned in the output
+  for each instance of PlaceBets in the input. The success
+  or failure of the individual bet placement operation is
+  indicated by the Success Boolean.
 
   Cancel multiple unmatched (1 to 40) bets placed on a
   single Market. The success or failure of the individual
@@ -250,11 +254,14 @@
   list of these objects as \code{bets} argument to
   \code{cancelBets}.
 
-  If newPrice and newSize are both specified the newSize
-  value is ignored. For example, an original bet is placed
-  for 100 with odds of 1.5: UpdateBets is called with
-  newSize = 200, newPrice = 2. The original bet is
-  cancelled and a new bet is place for 100 with odds of 2.
+  Edit multiple (1 to 15) bets on a single Market. The
+  success or failure of the individual bet editing
+  operation is indicated by the Success Boolean. If
+  newPrice and newSize are both specified the newSize value
+  is ignored. For example, an original bet is placed for
+  100 with odds of 1.5: UpdateBets is called with newSize =
+  200, newPrice = 2. The original bet is cancelled and a
+  new bet is place for 100 with odds of 2.
 }
 \details{
   Constructor of \code{bfBet} object. You supply a list of
@@ -272,8 +279,8 @@
   \tab No \tab Yes \tab No \cr Limit on Close \tab Yes \tab
   No \tab Yes \tab No }
 
-  You can specify, for each bet, if you want to place a
-  Back bet or a Lay bet.
+  \describe{ \item{Bet Types}{ You can specify, for each
+  bet, if you want to place a Back bet or a Lay bet.
 
   * B - Back bets win when the selection is settled as the
   winner in the market. * L - Lay bets win when the

@@ -328,7 +328,7 @@
   This is the lite version of the GetBet service.
 
   This is a lite version of the GetBet service that returns
-  information on matched bets.{
+  information on matched bets.
 
   Retrieve information about all your matched and unmatched
   bets on a particular exchange server.  You should be
@@ -356,22 +356,8 @@
 }
 \author{
   Vitalie Spinu (\email{spinuvit@gmail.com})
-
-  Vitalie Spinu (\email{spinuvit@gmail.com})
-
-  Vitalie Spinu (\email{spinuvit@gmail.com})
-
-  Vitalie Spinu (\email{spinuvit@gmail.com})
-
-  Vitalie Spinu (\email{spinuvit@gmail.com})
 }
 \references{
-  \url{http://code.google.com/p/betfairly/},
-  \url{https://docs.developer.betfair.com/betfair/}
-
-  \url{http://code.google.com/p/betfairly/},
-  \url{https://docs.developer.betfair.com/betfair/}
-
   \url{http://code.google.com/p/betfairly/},
   \url{https://docs.developer.betfair.com/betfair/}
 }

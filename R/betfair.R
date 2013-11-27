@@ -258,7 +258,6 @@ getAllEventTypes <- function(locale,
 ##' @note The GetActiveEventTypes service is a global service, and it returns information about the events
 ##' available on both the UK and the Australian exchange servers.
 ##' @export
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getActiveEventTypes <- function(locale,
                              output = getOption("bfOutput"), curlOpts = list()) NULL
 getActiveEventTypes <- getAllEventTypes
@@ -358,7 +357,6 @@ getEvents <- function(eventParentId = 1L, locale,
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
 ##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 ##' @export
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getAllMarkets <- function(eventTypeIds, countries, fromDate, toDate, locale,
                           server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     call <- match.call()
@@ -622,7 +620,6 @@ getMarketPrices <- function(marketId, currencyCode,
 ##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{GetMarketPricesCompressedRespSimple} containing slots \code{runners} and \code{prices}.
 ##' @export
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 getMarketPricesCompressed <- function(marketId, currencyCode,
                                       server = getOption("bfServer"), output= getOption("bfOutput"), curlOpts = list()){
     res <- bfGenericRequest(match.call())
@@ -683,7 +680,6 @@ getBet <- function(betId,
 ##' @return A list of class \code{GetBetLiteRespSimple} with no additional
 ##' slots.  Contains a subset of information from data part of \code{getBet}
 ##' response.
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 getBetLite <- function(betId,
                        server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
@@ -693,7 +689,7 @@ getBetLite <- function(betId,
 
 
 ##'
-##' This is a lite version of the GetBet service that returns information on matched bets.{
+##' This is a lite version of the GetBet service that returns information on matched bets.
 ##' @rdname BF_Bet_History
 ##' @param betId The unique bet identifier
 ##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
@@ -705,10 +701,8 @@ getBetLite <- function(betId,
 ##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Data frame of class \code{GetBetMatchesLiteRespSimple} containing
 ##' subset of information from \code{@@matches} slot in \code{getBet} response.
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getBetMatchesLite <- function(betId,
                               server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
     out <- .bfRequestInternal(betId = betId, operation = "getBetMatchesLite", curlOpts = curlOpts, server = server)
@@ -768,10 +762,8 @@ getBetMatchesLite <- function(betId,
 ##' \code{\link{curlPerform}}. You can also set the defaults with
 ##' \code{options(bfCurlOpts = list(opt1 = val1, opt2 = val2, ...))}.
 ##' @return Object of class \code{xxx} containing slot
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 ##' @seealso \code{\link{betfairly-package}} \code{\link{bfSimpleOutput-class}}
-##' @references \url{http://code.google.com/p/betfairly/},  \url{https://docs.developer.betfair.com/betfair/}
 getMUBets <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy = "BET_ID",
                       sortOrder = "ASC", recordCount = 200, startRecord = 0, excludeLastSecond = FALSE,
                       server = getOption("bfServer"), output = getOption("bfOutput"), curlOpts = list()){
@@ -874,7 +866,6 @@ getMUBetsLite <- function(marketId, betIds, betStatus = "MU", matchedSince, orde
 ##' \code{betHistoryItems} - a data frame with one  bet per row  and
 ##' \code{matches} - a data frame with all the matches if the \code{details}
 ##' parameter  was set to TRUE.
-##' @author Vitalie Spinu (\email{spinuvit@@gmail.com})
 ##' @export
 getBetHistory <- function(marketId = 0, eventTypeIds = NULL, detailed = FALSE, sortBetsBy = "NONE",
                           betTypesIncluded = "S", marketTypesIncluded = "O",
@@ -1012,8 +1003,9 @@ bfBet <- function(marketId, selectionId, price, size, betType = "B", bspLiabilit
     structure(bfCollapseParams(eval(call, envir = parent.frame(1L))), class = "bfBet")
 }
 
-##'
-##'
+
+##' #
+##' 
 ##' Place multiple (1 to 60) bets on a single Market. There is an instance of
 ##' PlaceBetsResp returned in the output for each instance of PlaceBets in the
 ##' input. The success or failure of the individual bet placement operation is
@@ -1021,7 +1013,6 @@ bfBet <- function(marketId, selectionId, price, size, betType = "B", bspLiabilit
 ##'
 ##' \describe{
 ##' \item{Bet Types}{
-##'
 ##' You can specify, for each bet, if you want to place a Back bet or a Lay bet.
 ##'
 ##' * B - Back bets win when the selection is settled as the winner in the market.
@@ -1106,7 +1097,7 @@ placeBets <- function(bets = list(),
                    letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["betResults"]])))
 }
 
-##'
+##' #
 ##'
 ##' Cancel multiple unmatched (1 to 40) bets placed on a single Market. The
 ##' success or failure of the individual bet cancellation operation will be
@@ -1131,7 +1122,7 @@ cancelBets <- function(bets,
                    letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["betResults"]])))
 }
 
-##'
+##' #
 ##'
 ##' [payed] Cancel all unmatched bets (or unmatched portions of bets) placed on
 ##' one or more Markets. You might use this service to quickly close out a
@@ -1155,7 +1146,7 @@ cancelBetsByMarket <- function(markets,
                    letMeParseFunc = function(out) bfArrayToDataFrame2(out[["results"]]))
 }
 
-##'
+##' #
 ##'
 ##' Constructor of \code{bfBetUpdate} object. You supply a list of these  objects
 ##' as \code{bets} argument to \code{cancelBets}.
@@ -1181,16 +1172,14 @@ bfBetUpdate <- function(betId, newPrice, oldPrice, newSize, oldSize,newBetPersis
     structure(bfCollapseParams(eval(call, envir = parent.frame(1))), class = "bfBetUpdate")
 }
 
-##'
+##' #
 ##'
 ##' Edit multiple (1 to 15) bets on a single Market. The success or failure of
-##' the individual bet editing operation is indicated by the Success Boolean.
-##'
-##' If newPrice and newSize are both specified the newSize value is ignored. For
+##' the individual bet editing operation is indicated by the Success Boolean. If
+##' newPrice and newSize are both specified the newSize value is ignored. For
 ##' example, an original bet is placed for 100 with odds of 1.5: UpdateBets is
 ##' called with newSize = 200, newPrice = 2. The original bet is cancelled and a
 ##' new bet is place for 100 with odds of 2.
-##'
 ##' @rdname BF_Bet_Placement
 ##' @param bets Can be an \code{bfBetUpdate} object or a list (of max 15) such objects.
 ##' @param betIds _

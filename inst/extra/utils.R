@@ -1,32 +1,29 @@
 ## in inst directory
 
-## package.skeleton("betfair1", enviro = new.env(),
-##                  force = TRUE, namespace = TRUE, code_files = c("betfair.R", "funcs.R"))
-## library(roxygen)
-
 setwd("../..") ## parent of betfairly dir
 getwd()
+
 .build_sysdata()
 ## system("cp types_data.rda betfairly/inst/extdata/")
-library(roxygen)
+library(roxygen2)
 
 options(width = 80)
 system("rm -r -f betfairly.roxygen")
-roxygenize("betfairly", "betfairly.roxygen", use.Rd2 = T)
+
+roxygenize("~/works/betfair/betfairly")
 ## roxygen2:::roxygenize("betfairly", "betfairly.roxygen")
 system("R CMD Rd2pdf --output=betfairly_manual.pdf --force betfairly.roxygen ")
-system("cp sysdata.rda betfairly.roxygen/R/")
+system("cp sysdata.rda betfairly/R/")
 ## system("rm betfairly.roxygen/R/sysdata.rda")
 ## system("R CMD check betfairly.roxygen")
 ## tools::showNonASCII(readLines("./betfairly/R/betfair.R"))
 
-system("rm betfairly.roxygen/R/.Rhistory")
-system("R CMD build betfairly.roxygen")
+system("rm betfairly/R/.Rhistory")
+system("R CMD build betfairly")
 
 system("R CMD check betfairly_1.2.tar.gz")
 
 install.packages("betfairly_1.12.tar.gz")
-sdf
 
 
 
