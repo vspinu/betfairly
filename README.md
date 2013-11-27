@@ -29,11 +29,11 @@ library(devtools)
 install_github("betfairly", "vitoshka")
 ```
 
-This package is also available from CRAN:
+<!-- This package is also available from CRAN: -->
 
-```R
-install.packages("betfairly")
-```
+<!-- ```R -->
+<!-- install.packages("betfairly") -->
+<!-- ``` -->
 
 
 ## Reporting Bugs
