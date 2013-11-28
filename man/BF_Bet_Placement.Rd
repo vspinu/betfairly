@@ -1,6 +1,6 @@
 \name{bfBet}
-\alias{bfBet}
 \alias{>BF_Bet_Placement}
+\alias{bfBet}
 \alias{bfBetUpdate}
 \alias{cancelBets}
 \alias{cancelBetsByMarket}
@@ -8,31 +8,28 @@
 \alias{updateBets}
 \title{Functions to place, update and cancel bets.}
 \usage{
-  bfBet(marketId, selectionId, price, size, betType = "B",
-    bspLiability = 0, betCategoryType = "E",
-    betPersistenceType = "NONE",
-    server = getOption("bfServer"))
+bfBet(marketId, selectionId, price, size, betType = "B", bspLiability = 0,
+  betCategoryType = "E", betPersistenceType = "NONE",
+  server = getOption("bfServer"))
 
-  placeBets(bets = list(), marketIds, selectionIds, prices,
-    sizes, betTypes = "B", bspLiabilities = 0,
-    betCategoryTypes = "E", betPersistenceTypes = "NONE",
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+placeBets(bets = list(), marketIds, selectionIds, prices, sizes,
+  betTypes = "B", bspLiabilities = 0, betCategoryTypes = "E",
+  betPersistenceTypes = "NONE", server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  cancelBets(bets, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+cancelBets(bets, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  cancelBetsByMarket(markets,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+cancelBetsByMarket(markets, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  bfBetUpdate(betId, newPrice, oldPrice, newSize, oldSize,
-    newBetPersistenceType, oldBetPersistenceType)
+bfBetUpdate(betId, newPrice, oldPrice, newSize, oldSize, newBetPersistenceType,
+  oldBetPersistenceType)
 
-  updateBets(bets = list(), betIds, newPrices, oldPrices,
-    newSizes, oldSizes, newBetPersistenceTypes,
-    oldBetPersistenceTypes, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+updateBets(bets = list(), betIds, newPrices, oldPrices, newSizes, oldSizes,
+  newBetPersistenceTypes, oldBetPersistenceTypes,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 }
 \arguments{
   \item{marketId}{Integer specifying the market ID.}
@@ -208,143 +205,141 @@
   val2, ...))}.}
 }
 \value{
-  String of class \code{bfBet}.
+String of class \code{bfBet}.
 
-  Data frame with info on the success of placed bets, one
-  bet per row.
+Data frame with info on the success of placed bets, one bet
+per row.
 
-  Data frame with info on canceled bets, one bet per row.
+Data frame with info on canceled bets, one bet per row.
 
-  Object of class \code{xxx} containing slot
+Object of class \code{xxx} containing slot
 
-  String of class \code{bfBetUpdate}.
+String of class \code{bfBetUpdate}.
 
-  Data frame with info on the success of bet updates, one
-  bet per row.
+Data frame with info on the success of bet updates, one bet
+per row.
 }
 \description{
-  Place, update and cancel multiple bets at a time. \cr \cr
-  For \code{placeBets} and \code{updateBets}, there are two
-  equivalent ways of supplying the bet info. First, by
-  passing a list of corresponding objects (\code{bfBet} and
-  \code{bfBetUpdate}) as \code{bets} argument. Second, a
-  vectorized (\code{mapplyish}) way, by supplying vectors
-  to corresponding arguments. Vectorized arguments are
-  recycled to the same length if needed. These arguments
-  are all in plural and are not documented below.
+Place, update and cancel multiple bets at a time. \cr \cr
+For \code{placeBets} and \code{updateBets}, there are two
+equivalent ways of supplying the bet info. First, by
+passing a list of corresponding objects (\code{bfBet} and
+\code{bfBetUpdate}) as \code{bets} argument. Second, a
+vectorized (\code{mapplyish}) way, by supplying vectors to
+corresponding arguments. Vectorized arguments are recycled
+to the same length if needed. These arguments are all in
+plural and are not documented below.
 
-  Place multiple (1 to 60) bets on a single Market. There
-  is an instance of PlaceBetsResp returned in the output
-  for each instance of PlaceBets in the input. The success
-  or failure of the individual bet placement operation is
-  indicated by the Success Boolean.
+\describe{
 
-  Cancel multiple unmatched (1 to 40) bets placed on a
-  single Market. The success or failure of the individual
-  bet cancellation operation will be indicated by the
-  Success Boolean. If a portion of the original bet is
-  already matched, cancelBets cancels the unmatched portion
-  of the bet.
+cancelBets: Cancel multiple unmatched (1 to 40) bets placed
+on a single Market. The success or failure of the
+individual bet cancellation operation will be indicated by
+the Success Boolean. If a portion of the original bet is
+already matched, cancelBets cancels the unmatched portion
+of the bet.
 
-  [payed] Cancel all unmatched bets (or unmatched portions
-  of bets) placed on one or more Markets. You might use
-  this service to quickly close out a position on a market.
+cancelBetsByMarket: [payed] Cancel all unmatched bets (or
+unmatched portions of bets) placed on one or more Markets.
+You might use this service to quickly close out a position
+on a market.
 
-  Constructor of \code{bfBetUpdate} object. You supply a
-  list of these objects as \code{bets} argument to
-  \code{cancelBets}.
+bfBetUpdate: Constructor of \code{bfBetUpdate} object. You
+supply a list of these objects as \code{bets} argument to
+\code{cancelBets}.
 
-  Edit multiple (1 to 15) bets on a single Market. The
-  success or failure of the individual bet editing
-  operation is indicated by the Success Boolean. If
-  newPrice and newSize are both specified the newSize value
-  is ignored. For example, an original bet is placed for
-  100 with odds of 1.5: UpdateBets is called with newSize =
-  200, newPrice = 2. The original bet is cancelled and a
-  new bet is place for 100 with odds of 2.
+updateBets: Edit multiple (1 to 15) bets on a single
+Market. The success or failure of the individual bet
+editing operation is indicated by the Success Boolean. If
+newPrice and newSize are both specified the newSize value
+is ignored. For example, an original bet is placed for 100
+with odds of 1.5: UpdateBets is called with newSize = 200,
+newPrice = 2. The original bet is cancelled and a new bet
+is place for 100 with odds of 2.
 }
 \details{
-  Constructor of \code{bfBet} object. You supply a list of
-  these objects as \code{bets} argument to
-  \code{placeBets}.
+bfBet: Constructor of \code{bfBet} object. You supply a
+list of these objects as \code{bets} argument to
+\code{placeBets}.
 
-  ##' The required fields in bets are dependent on the
-  category of bet. The following table shows the required
-  fields for each bet category.
+The required fields in bets are dependent on the category
+of bet. The following table shows the required fields for
+each bet category.
 
-  Table 1. Valid Bet Category request field combinations
-  \tabular{lrrrr}{ Bet Category \tab Price \tab Size \tab
-  BspLiability \tab BetPersistenceType \cr Exchange \tab
-  Yes \tab Yes \tab No \tab Yes \cr Market on Close \tab No
-  \tab No \tab Yes \tab No \cr Limit on Close \tab Yes \tab
-  No \tab Yes \tab No }
+Table 1. Valid Bet Category request field combinations
+\tabular{lrrrr}{ Bet Category \tab Price \tab Size \tab
+BspLiability \tab BetPersistenceType \cr Exchange \tab Yes
+\tab Yes \tab No \tab Yes \cr Market on Close \tab No \tab
+No \tab Yes \tab No \cr Limit on Close \tab Yes \tab No
+\tab Yes \tab No }
 
-  \describe{ \item{Bet Types}{ You can specify, for each
-  bet, if you want to place a Back bet or a Lay bet.
+\item{Bet Types}{
 
-  * B - Back bets win when the selection is settled as the
-  winner in the market. * L - Lay bets win when the
-  selection is settled as a looser in the market.
+You can specify, for each bet, if you want to place a Back
+bet or a Lay bet.
 
-  For more information on Bet types, see the Betfair
-  website help. } \item{Bet Categories}{
+* B - Back bets win when the selection is settled as the
+winner in the market. * L - Lay bets win when the selection
+is settled as a looser in the market.
 
-  You can specify, for each bet, whether the bet is a
-  regular exchange bet, or a Betfair Market on Close (or
-  Starting Price) bet (with or without a price limit).
+For more information on Bet types, see the Betfair website
+help. } \item{Bet Categories}{
 
-  * E - Exchange bets are placed on the market and are
-  matched against bets at the specified or better price.
-  Exchange bets are matched on a first in, first matched
-  basis.
+You can specify, for each bet, whether the bet is a regular
+exchange bet, or a Betfair Market on Close (or Starting
+Price) bet (with or without a price limit).
 
-  * M - Market on Close (MOC) bets remain unmatched until
-  the market is reconciled. They are matched and settled at
-  a price that is representative of the market at the point
-  the market is turned in-play. The market is reconciled to
-  find a starting price and MOC bets are settled at
-  whatever starting price is returned. MOC bets are always
-  matched and settled, unless a starting price is not
-  available for the selection. Market on Close bets can
-  only be placed before the starting price is determined.
+* E - Exchange bets are placed on the market and are
+matched against bets at the specified or better price.
+Exchange bets are matched on a first in, first matched
+basis.
 
-  * L - Limit on Close (LOC) bets are matched if, and only
-  if, the returned starting price is better than a
-  specified price. In the case of back bets, LOC bets are
-  matched if the calculated starting price is greater than
-  the specified price. In the case of lay bets, LOC bets
-  are matched if the starting price is less than the
-  specified price. If the specified limit is equal to the
-  starting price, then it may be matched, partially
-  matched, or may not be matched at all, depending on how
-  much is needed to balance all bets against each other
-  (MOC, LOC and normal exchange bets) } \item{Bet
-  Persistence}{
+* M - Market on Close (MOC) bets remain unmatched until the
+market is reconciled. They are matched and settled at a
+price that is representative of the market at the point the
+market is turned in-play. The market is reconciled to find
+a starting price and MOC bets are settled at whatever
+starting price is returned. MOC bets are always matched and
+settled, unless a starting price is not available for the
+selection. Market on Close bets can only be placed before
+the starting price is determined.
 
-  You can specify what happens to an Exchange bet that is
-  unmatched when the market is reconciled and the starting
-  price is calculated.
+* L - Limit on Close (LOC) bets are matched if, and only
+if, the returned starting price is better than a specified
+price. In the case of back bets, LOC bets are matched if
+the calculated starting price is greater than the specified
+price. In the case of lay bets, LOC bets are matched if the
+starting price is less than the specified price. If the
+specified limit is equal to the starting price, then it may
+be matched, partially matched, or may not be matched at
+all, depending on how much is needed to balance all bets
+against each other (MOC, LOC and normal exchange bets) }
+\item{Bet Persistence}{
 
-  * NONE - The unmatched bet is cancelled when the market
-  is reconciled and turned in-play.
+You can specify what happens to an Exchange bet that is
+unmatched when the market is reconciled and the starting
+price is calculated.
 
-  * IP - The unmatched bet stays as an unmatched bet when
-  the market is turn in-play.
+* NONE - The unmatched bet is cancelled when the market is
+reconciled and turned in-play.
 
-  * SP - The unmatched bet becomes a Market on Close bet
-  and is matched at the starting price.
+* IP - The unmatched bet stays as an unmatched bet when the
+market is turn in-play.
 
-  }}
+* SP - The unmatched bet becomes a Market on Close bet and
+is matched at the starting price.
+
+}}
 }
 \author{
-  Vitalie Spinu (\email{spinuvit@gmail.com})
+Vitalie Spinu (\email{spinuvit@gmail.com})
 }
 \references{
-  \url{http://code.google.com/p/betfairly/},
-  \url{https://docs.developer.betfair.com/betfair/}
+\url{http://code.google.com/p/betfairly/},
+\url{https://docs.developer.betfair.com/betfair/}
 }
 \seealso{
-  \code{\link{betfairly-package}}
-  \code{\link{bfSimpleOutput-class}}
+\code{\link{betfairly-package}}
+\code{\link{bfSimpleOutput-class}}
 }
 

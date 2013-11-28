@@ -201,15 +201,16 @@ bfSessionHandler <- function(){
 
 ##' Functions to retrieve betfair events (Games,  sports, politics etc)
 ##'
-##' Allows the customer to retrieve lists of all categories of sports (Games, Event
-##' Types) that have at least one market associated with them, regardless of
-##' whether that market is now closed for betting. This means that, for example,
-##' the service would always return the event types Soccer and Horse Racing and
-##' would also return Olympics 2004 or EURO 2004 for a certain period after the
-##' markets for those events had closed; it would also return Olympics 2004 or EURO
-##' 2004 for a certain period before the markets for those events had opened. The
-##' service returns information on future events to allow API programmers to see
-##' the range of events that will be available to bet on in the near future.
+##' getAllEventTypes: Allows the customer to retrieve lists of all categories of
+##' sports (Games, Event Types) that have at least one market associated with
+##' them, regardless of whether that market is now closed for betting. This
+##' means that, for example, the service would always return the event types
+##' Soccer and Horse Racing and would also return Olympics 2004 or EURO 2004 for
+##' a certain period after the markets for those events had closed; it would
+##' also return Olympics 2004 or EURO 2004 for a certain period before the
+##' markets for those events had opened. The service returns information on
+##' future events to allow API programmers to see the range of events that will
+##' be available to bet on in the near future.
 ##'
 ##' @rdname BF_Events
 ##' @aliases >BF_Events getAllEventTypes
@@ -239,12 +240,12 @@ getAllEventTypes <- function(locale,
 
 ##'
 ##'
-##' Allows the customer to retrieve lists of all categories of sporting events
-##' (Games, Event Types) that are available to bet on: in other words, all those
-##' that have at least one currently active or suspended market associated with
-##' them. This means, therefore, that the service would, for example, always return
-##' the event types Soccer and Horse Racing but would not return Olympics 2004 or
-##' EURO 2004 after those events had finished.
+##' getActiveEventTypes: Allows the customer to retrieve lists of all categories
+##' of sporting events (Games, Event Types) that are available to bet on: in
+##' other words, all those that have at least one currently active or suspended
+##' market associated with them. This means, therefore, that the service would,
+##' for example, always return the event types Soccer and Horse Racing but would
+##' not return Olympics 2004 or EURO 2004 after those events had finished.
 ##'
 ##' @rdname BF_Events
 ##' @param locale Specify the language for the reply if you want a different
@@ -267,8 +268,8 @@ getActiveEventTypes <- getAllEventTypes
 
 ##'
 ##'
-##' Allows you to navigate through the events hierarchy until you reach details of
-##' the betting market for an event that you are interested in.
+##' getEvents: Allows you to navigate through the events hierarchy until you
+##' reach details of the betting market for an event that you are interested in.
 ##'
 ##' From API 5.0 onwards, the GetEvents service returns details of line and
 ##' range markets, where these markets are available for an event.  Requests
@@ -323,12 +324,13 @@ getEvents <- function(eventParentId = 1L, locale,
 #### GET MARKETS
 ##' Functions to retrieve information about Betfair markets.
 ##'
-##' Retrieve information about all of the markets that are currently
-##' active or suspended on the given exchange. You can use this service to quickly
-##' analyse the available markets on the exchange, or use the response to build a
-##' local copy of the Betfair.com navigation menu. You can limit the response to a
-##' particular time period, country where the event is taking place, and event
-##' type. Otherwise, the service returns all active and suspended markets.
+##' getAllMarkets: Retrieve information about all of the markets that are
+##' currently active or suspended on the given exchange. You can use this
+##' service to quickly analyse the available markets on the exchange, or use the
+##' response to build a local copy of the Betfair.com navigation menu. You can
+##' limit the response to a particular time period, country where the event is
+##' taking place, and event type. Otherwise, the service returns all active and
+##' suspended markets.
 ##'
 ##' @rdname BF_Markets
 ##' @aliases >BF_Markets getAllMarkets
@@ -392,10 +394,10 @@ getAllMarkets <- function(eventTypeIds, countries, fromDate, toDate, locale,
 
 ##'
 ##'
-##' The API GetMarket service allows the customer to input a Market ID and retrieve
-##' all static market data for the market requested. To get a Market ID for the
-##' betting market associated with an event you are interested in, use the
-##' GetEvents command.
+##' getMarket: The API GetMarket service allows the customer to input a Market
+##' ID and retrieve all static market data for the market requested. To get a
+##' Market ID for the betting market associated with an event you are interested
+##' in, use the GetEvents command.
 ##'
 ##' @rdname BF_Markets
 ##' @param marketId Integer specifying the market ID.
@@ -430,10 +432,11 @@ getMarket <- function(marketId, includeCouponLinks = FALSE, locale = "en",
 
 ##'
 ##'
-##' The API GetMarketInfo service allows you to input a Market ID and retrieve
-##' market data for the market requested. To get a Market ID for the betting
-##' market associated with an event you are interested in, use the GetEvents
-##' command. This is a lite service to compliment the GetMarket service.
+##' getMarketInfo: The API GetMarketInfo service allows you to input a Market ID
+##' and retrieve market data for the market requested. To get a Market ID for
+##' the betting market associated with an event you are interested in, use the
+##' GetEvents command. This is a lite service to compliment the GetMarket
+##' service.
 ##'
 ##' @rdname BF_Markets
 ##' @param marketId Integer specifying the market ID.
@@ -461,7 +464,8 @@ getMarketInfo <- function(marketId,
 
 ##'
 ##'
-##' Obtain all the current odds and matched amounts on a single runner in a particular event.
+##' getMarketTradedVolume: Obtain all the current odds and matched amounts on a
+##' single runner in a particular event.
 ##' @rdname BF_Markets
 ##' @param marketId Integer specifying the market ID.
 ##' @param selectionId The desired runner id.
@@ -490,7 +494,8 @@ getMarketTradedVolume <- function(marketId,  selectionId, asianLineId, currencyC
 
 ##'
 ##'
-##' Obtain the current price (odds) and matched amounts at each price on all of the runners in a particular market.
+##' getMarketTradedVolumeCompressed: Obtain the current price (odds) and matched
+##' amounts at each price on all of the runners in a particular market.
 ##' @rdname BF_Markets
 ##' @param marketId Integer specifying the market ID.
 ##' @param currencyCode Three letter ISO 4217 code.
@@ -517,10 +522,10 @@ getMarketTradedVolumeCompressed <- function(marketId, currencyCode,
 #### GET PRICES
 ##' Functions to retrieve prices on Betfair markets.
 ##'
-##' Retrieve all back and lay stakes for each price on the exchange for a given
-##' Market ID in a compressed format. The information returned is similar to the
-##' GetDetailAvailableMarketDepth, except it returns the data for an entire market,
-##' rather than just one selection.
+##' getCompleteMarketPricesCompressed: Retrieve all back and lay stakes for each
+##' price on the exchange for a given Market ID in a compressed format. The
+##' information returned is similar to the GetDetailAvailableMarketDepth, except
+##' it returns the data for an entire market, rather than just one selection.
 ##'
 ##' @rdname BF_Prices
 ##' @aliases >BF_Prices getCompleteMarketPricesCompressed
@@ -551,7 +556,7 @@ getCompleteMarketPricesCompressed <- function(marketId, currencyCode = "EUR",
 
 ##'
 ##'
-##' Retrieve dynamic market data for a given Market ID.
+##' getMarketPrices: Retrieve dynamic market data for a given Market ID.
 ##'
 ##' @rdname BF_Prices
 ##' @param marketId integer ID of the required market
@@ -604,9 +609,9 @@ getMarketPrices <- function(marketId, currencyCode,
 
 ##'
 ##'
-##' Retrieve dynamic market data for a given Market ID in a compressed format. This
-##' service returns the same information as the Get Market Prices service but
-##' returns it in a ~ (tilde) delimited String.
+##' getMarketPricesCompressed: Retrieve dynamic market data for a given Market
+##' ID in a compressed format. This service returns the same information as the
+##' Get Market Prices service but returns it in a ~ (tilde) delimited String.
 ##'
 ##' @rdname BF_Prices
 ##' @param marketId Integer specifying the market ID.
@@ -636,8 +641,8 @@ getMarketPricesCompressed <- function(marketId, currencyCode,
 ##' getBetMatchesLite you can access detailed information about your specific
 ##' bets.
 ##'
-##' Retrieve information about a particular bet. Each request will retrieve all
-##' components of the desired bet.
+##' getBet: Retrieve information about a particular bet. Each request will
+##' retrieve all components of the desired bet.
 ##'
 ##' You can retrieve Cancelled, Lapsed, and Voided bets from only settled
 ##' markets and these bets are available for a maximum of 10 days from the date
@@ -667,7 +672,7 @@ getBet <- function(betId,
 
 ##'
 ##'
-##' This is the lite version of the GetBet service.
+##' getBetLite: This is the lite version of the GetBet service.
 ##' @rdname BF_Bet_History
 ##' @param betId The unique bet identifier
 ##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
@@ -689,7 +694,8 @@ getBetLite <- function(betId,
 
 
 ##'
-##' This is a lite version of the GetBet service that returns information on matched bets.
+##' getBetMatchesLite: This is a lite version of the GetBet service that returns
+##' information on matched bets.
 ##' @rdname BF_Bet_History
 ##' @param betId The unique bet identifier
 ##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
@@ -712,8 +718,8 @@ getBetMatchesLite <- function(betId,
 
 ##'
 ##'
-##' Retrieve information about all your matched and unmatched bets on a
-##' particular exchange server.  You should be aware that voided bets are not
+##' getMUBets: Retrieve information about all your matched and unmatched bets on
+##' a particular exchange server.  You should be aware that voided bets are not
 ##' returned by getMUBets. Your application should track the number of matched
 ##' and unmatched bets against the number of bets returned by getMUBets in order
 ##' to detect a voided bet.
@@ -787,7 +793,7 @@ getMUBets <- function(marketId, betIds, betStatus = "MU", matchedSince, orderBy 
 
 ##'
 ##'
-##' This is a lite version of the getMUBets service.
+##' getMUBetsLite: This is a lite version of the getMUBets service.
 ##' @rdname BF_Bet_History
 ##' @param marketId Integer specifying the market ID.
 ##' @param betIds A vector specifying the betId of each bet you want
@@ -886,8 +892,9 @@ getBetHistory <- function(marketId = 0, eventTypeIds = NULL, detailed = FALSE, s
 
 ##'
 ##'
-##' Retrieve Profit and Loss information for the user account in a given market.
-##' The limitations for the service in the initial release are:
+##' getMarketProfitAndLoss: Retrieve Profit and Loss information for the user
+##' account in a given market. The limitations for the service in the initial
+##' release are:
 ##'
 ##'    * Profit and loss for single and multi-winner odds markets is implemented
 ##' however it won't calculate worstCaseIfWin nor futureIfWin.
@@ -933,10 +940,10 @@ getMarketProfitAndLoss <- function(marketID, includeSettledBets = FALSE,  includ
 ##' needed. These arguments are all in plural and are not documented below.
 ##'
 ##'
-##' Constructor of \code{bfBet} object. You supply a list of these objects as
+##' bfBet: Constructor of \code{bfBet} object. You supply a list of these objects as
 ##' \code{bets} argument to \code{placeBets}.
 ##'
-##' ##' The required fields in bets are dependent on the category of bet. The
+##' The required fields in bets are dependent on the category of bet. The
 ##' following table shows the required fields for each bet category.
 ##'
 ##' Table 1. Valid Bet Category request field combinations
@@ -1000,19 +1007,23 @@ bfBet <- function(marketId, selectionId, price, size, betType = "B", bspLiabilit
         stop("betType must be B, or L. Supplied : ", betType)
     call[c("marketId", "selectionId", "betType")] <- c(marketId, selectionId, betType)
     call[[1]] <- as.name("list")
+    
     structure(bfCollapseParams(eval(call, envir = parent.frame(1L))), class = "bfBet")
 }
 
 
-##' #
+
 ##' 
-##' Place multiple (1 to 60) bets on a single Market. There is an instance of
+##'
+##' placeBets: Place multiple (1 to 60) bets on a single Market. There is an instance of
 ##' PlaceBetsResp returned in the output for each instance of PlaceBets in the
 ##' input. The success or failure of the individual bet placement operation is
 ##' indicated by the Success Boolean.
 ##'
 ##' \describe{
+##' 
 ##' \item{Bet Types}{
+##' 
 ##' You can specify, for each bet, if you want to place a Back bet or a Lay bet.
 ##'
 ##' * B - Back bets win when the selection is settled as the winner in the market.
@@ -1097,12 +1108,12 @@ placeBets <- function(bets = list(),
                    letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["betResults"]])))
 }
 
-##' #
+##' 
 ##'
-##' Cancel multiple unmatched (1 to 40) bets placed on a single Market. The
-##' success or failure of the individual bet cancellation operation will be
-##' indicated by the Success Boolean. If a portion of the original bet is
-##' already matched, cancelBets cancels the unmatched portion of the bet.
+##' cancelBets: Cancel multiple unmatched (1 to 40) bets placed on a single
+##' Market. The success or failure of the individual bet cancellation operation
+##' will be indicated by the Success Boolean. If a portion of the original bet
+##' is already matched, cancelBets cancels the unmatched portion of the bet.
 ##' @rdname BF_Bet_Placement
 ##' @param bets
 ##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
@@ -1122,11 +1133,11 @@ cancelBets <- function(bets,
                    letMeParseFunc = function(out) list(bfArrayToDataFrame2(out[["betResults"]])))
 }
 
-##' #
+##' 
 ##'
-##' [payed] Cancel all unmatched bets (or unmatched portions of bets) placed on
-##' one or more Markets. You might use this service to quickly close out a
-##' position on a market.
+##' cancelBetsByMarket: [payed] Cancel all unmatched bets (or unmatched portions
+##' of bets) placed on one or more Markets. You might use this service to
+##' quickly close out a position on a market.
 ##' @rdname BF_Bet_Placement
 ##' @param markets Vector of market IDs.
 ##' @param server "GB" (default)  or "AU" - a Betfair exchange server to
@@ -1146,10 +1157,10 @@ cancelBetsByMarket <- function(markets,
                    letMeParseFunc = function(out) bfArrayToDataFrame2(out[["results"]]))
 }
 
-##' #
+##' 
 ##'
-##' Constructor of \code{bfBetUpdate} object. You supply a list of these  objects
-##' as \code{bets} argument to \code{cancelBets}.
+##' bfBetUpdate: Constructor of \code{bfBetUpdate} object. You supply a list of
+##' these objects as \code{bets} argument to \code{cancelBets}.
 ##' @rdname BF_Bet_Placement
 ##' @param betId The unique identifier for the bet.
 ##' @param newPrice New odds desired on the bet For BSP Limit on Close bets,
@@ -1172,14 +1183,14 @@ bfBetUpdate <- function(betId, newPrice, oldPrice, newSize, oldSize,newBetPersis
     structure(bfCollapseParams(eval(call, envir = parent.frame(1))), class = "bfBetUpdate")
 }
 
-##' #
+##' 
 ##'
-##' Edit multiple (1 to 15) bets on a single Market. The success or failure of
-##' the individual bet editing operation is indicated by the Success Boolean. If
-##' newPrice and newSize are both specified the newSize value is ignored. For
-##' example, an original bet is placed for 100 with odds of 1.5: UpdateBets is
-##' called with newSize = 200, newPrice = 2. The original bet is cancelled and a
-##' new bet is place for 100 with odds of 2.
+##' updateBets: Edit multiple (1 to 15) bets on a single Market. The success or
+##' failure of the individual bet editing operation is indicated by the Success
+##' Boolean. If newPrice and newSize are both specified the newSize value is
+##' ignored. For example, an original bet is placed for 100 with odds of 1.5:
+##' UpdateBets is called with newSize = 200, newPrice = 2. The original bet is
+##' cancelled and a new bet is place for 100 with odds of 2.
 ##' @rdname BF_Bet_Placement
 ##' @param bets Can be an \code{bfBetUpdate} object or a list (of max 15) such objects.
 ##' @param betIds _
@@ -1225,10 +1236,10 @@ updateBets <- function(bets = list(), betIds, newPrices, oldPrices, newSizes, ol
 
 ##' Various functions to access information about your account and wallets.
 ##'
-##' Retrieve information about your local wallet on a particular exchange
-##' server. For an explanation of the concept of wallets, see "Using
-##' Region-specific Wallets for Placing Bets" on page 12 in Betfair API
-##' Developer Documentation.
+##' getAccountFunds: Retrieve information about your local wallet on a
+##' particular exchange server. For an explanation of the concept of wallets,
+##' see "Using Region-specific Wallets for Placing Bets" on page 12 in Betfair
+##' API Developer Documentation.
 ##' @title Account management.
 ##' @rdname BF_Acount_Management
 ##' @aliases >BF_Acount_Management getAccountFunds
@@ -1253,7 +1264,8 @@ getAccountFunds <- function(server = getOption("bfServer"), output = getOption("
 
 ##'
 ##'
-##' Obtain information about transactions involving your local wallet on an exchange server.
+##' getAccountStatement: Obtain information about transactions involving your
+##' local wallet on an exchange server.
 ##' @rdname BF_Acount_Management
 ##' @param startDate Return records on or after this date.
 ##' @param endDate Return records on or before this date.
@@ -1290,7 +1302,7 @@ getAccountStatement <- function(startDate = Sys.Date()-1, endDate = Sys.time(),
 
 ##'
 ##'
-##' Return information on your API subscription.
+##' getSubscriptionInfo: Return information on your API subscription.
 ##' @rdname BF_Acount_Management
 ##' @param output Indicates the form of the returned value. Can be "simple"
 ##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.
@@ -1309,12 +1321,12 @@ getSubscriptionInfo <- function( output = getOption("bfOutput"), curlOpts = list
 
 ##'
 ##'
-##' Transfer funds between your UK and Australian account wallets. The
-##' concept of account wallets has been introduced in release 5.0 of the Betfair
-##' API. Instead of a single account holding all of a customer's funds for
-##' betting on sports events, there are now two "wallets" for each customer's
-##' account: one for betting on the UK exchange server and one for betting on
-##' the Australian exchange server.
+##' transferFunds: Transfer funds between your UK and Australian account
+##' wallets. The concept of account wallets has been introduced in release 5.0
+##' of the Betfair API. Instead of a single account holding all of a customer's
+##' funds for betting on sports events, there are now two "wallets" for each
+##' customer's account: one for betting on the UK exchange server and one for
+##' betting on the Australian exchange server.
 ##' @rdname BF_Acount_Management
 ##' @param amount _
 ##' @param sourceWalletId 	The wallet that you are requesting the funds to
@@ -1337,8 +1349,8 @@ transferFunds <- function(amount, sourceWalletId = 1,  targetWalletId = 2,
 
 ##'
 ##'
-##' Retrieve information about the user account, such as the registered address,
-##' e-mail address, phone numbers, etc.
+##' viewProfile: Retrieve information about the user account, such as the
+##' registered address, e-mail address, phone numbers, etc.
 ##' @rdname BF_Acount_Management
 ##' @param output Indicates the form of the returned value. Can be "simple"
 ##' (default), "xml", "list" or "S4". See \code{\link{betfairly-package}}.

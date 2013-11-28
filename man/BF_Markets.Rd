@@ -7,24 +7,24 @@
 \alias{getMarketTradedVolumeCompressed}
 \title{Betfair markets}
 \usage{
-  getAllMarkets(eventTypeIds, countries, fromDate, toDate,
-    locale, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getAllMarkets(eventTypeIds, countries, fromDate, toDate, locale,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getMarket(marketId, includeCouponLinks = FALSE,
-    locale = "en", server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMarket(marketId, includeCouponLinks = FALSE, locale = "en",
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getMarketInfo(marketId, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMarketInfo(marketId, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  getMarketTradedVolume(marketId, selectionId, asianLineId,
-    currencyCode, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMarketTradedVolume(marketId, selectionId, asianLineId, currencyCode,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getMarketTradedVolumeCompressed(marketId, currencyCode,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMarketTradedVolumeCompressed(marketId, currencyCode,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 }
 \arguments{
   \item{eventTypeIds}{A vector with the events ids to
@@ -142,72 +142,72 @@
   val2, ...))}.}
 }
 \value{
-  A data.frame containing one market per row and a
-  character string if \code{output = "S4"}.
+A data.frame containing one market per row and a character
+string if \code{output = "S4"}.
 
-  Object of class \code{GetMarketRespSimple} which inherits
-  from \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}}
-  class. Additional slot \code{runners} contains a data
-  frame of event participants.
+Object of class \code{GetMarketRespSimple} which inherits
+from \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}}
+class. Additional slot \code{runners} contains a data frame
+of event participants.
 
-  Object of native betfair class \code{GetMarketResp} if
-  \code{output = "S4"}.
+Object of native betfair class \code{GetMarketResp} if
+\code{output = "S4"}.
 
-  Object of class \code{GetMarketInfoRespSimple} which
-  inherits from
-  \code{\link[=bfSimpleOutput-class]{bfSimpleOutput}} class
-  and has no extra slots.
+Object of class \code{GetMarketInfoRespSimple} which
+inherits from
+\code{\link[=bfSimpleOutput-class]{bfSimpleOutput}} class
+and has no extra slots.
 
-  If \code{output = "S4"}, object of native betfair class
-  \code{GetMarketInfoResp}.
+If \code{output = "S4"}, object of native betfair class
+\code{GetMarketInfoResp}.
 
-  Object of class \code{GetMarketTradedVolumeRespSimple}
-  with a slot \code{priceItems} containing a data frame of
-  total match volumes for each odd.
+Object of class \code{GetMarketTradedVolumeRespSimple} with
+a slot \code{priceItems} containing a data frame of total
+match volumes for each odd.
 
-  Object of class
-  \code{GetMarketTradedVolumeCompressedRespSimple} with two
-  additional slots \code{runners} and \code{volumes}.
+Object of class
+\code{GetMarketTradedVolumeCompressedRespSimple} with two
+additional slots \code{runners} and \code{volumes}.
 }
 \description{
-  Functions to retrieve information about Betfair markets.
+Functions to retrieve information about Betfair markets.
 
-  The API GetMarket service allows the customer to input a
-  Market ID and retrieve all static market data for the
-  market requested. To get a Market ID for the betting
-  market associated with an event you are interested in,
-  use the GetEvents command.
+getMarket: The API GetMarket service allows the customer to
+input a Market ID and retrieve all static market data for
+the market requested. To get a Market ID for the betting
+market associated with an event you are interested in, use
+the GetEvents command.
 
-  The API GetMarketInfo service allows you to input a
-  Market ID and retrieve market data for the market
-  requested. To get a Market ID for the betting market
-  associated with an event you are interested in, use the
-  GetEvents command. This is a lite service to compliment
-  the GetMarket service.
+getMarketInfo: The API GetMarketInfo service allows you to
+input a Market ID and retrieve market data for the market
+requested. To get a Market ID for the betting market
+associated with an event you are interested in, use the
+GetEvents command. This is a lite service to compliment the
+GetMarket service.
 
-  Obtain all the current odds and matched amounts on a
-  single runner in a particular event.
+getMarketTradedVolume: Obtain all the current odds and
+matched amounts on a single runner in a particular event.
 
-  Obtain the current price (odds) and matched amounts at
-  each price on all of the runners in a particular market.
+getMarketTradedVolumeCompressed: Obtain the current price
+(odds) and matched amounts at each price on all of the
+runners in a particular market.
 }
 \details{
-  Retrieve information about all of the markets that are
-  currently active or suspended on the given exchange. You
-  can use this service to quickly analyse the available
-  markets on the exchange, or use the response to build a
-  local copy of the Betfair.com navigation menu. You can
-  limit the response to a particular time period, country
-  where the event is taking place, and event type.
-  Otherwise, the service returns all active and suspended
-  markets.
+getAllMarkets: Retrieve information about all of the
+markets that are currently active or suspended on the given
+exchange. You can use this service to quickly analyse the
+available markets on the exchange, or use the response to
+build a local copy of the Betfair.com navigation menu. You
+can limit the response to a particular time period, country
+where the event is taking place, and event type. Otherwise,
+the service returns all active and suspended markets.
 }
 \references{
-  \url{http://code.google.com/p/betfairly/},
-  \url{https://docs.developer.betfair.com/betfair/}
+\url{http://code.google.com/p/betfairly/},
+\url{https://docs.developer.betfair.com/betfair/}
 }
 \seealso{
-  \code{\link{betfairly-package}}
-  \code{\link{bfSimpleOutput-class}}
+\code{\link{betfairly-package}}
+\code{\link{bfSimpleOutput-class}}
 }
 

@@ -3,47 +3,43 @@
 \alias{getBetHistory}
 \alias{getBetLite}
 \alias{getBetMatchesLite}
-\alias{getMarketProfitAndLoss}
 \alias{getMUBets}
 \alias{getMUBetsLite}
+\alias{getMarketProfitAndLoss}
 \title{Access your bets}
 \usage{
-  getBet(betId, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getBet(betId, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  getBetLite(betId, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getBetLite(betId, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  getBetMatchesLite(betId, server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getBetMatchesLite(betId, server = getOption("bfServer"),
+  output = getOption("bfOutput"), curlOpts = list())
 
-  getMUBets(marketId, betIds, betStatus = "MU",
-    matchedSince, orderBy = "BET_ID", sortOrder = "ASC",
-    recordCount = 200, startRecord = 0,
-    excludeLastSecond = FALSE,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMUBets(marketId, betIds, betStatus = "MU", matchedSince,
+  orderBy = "BET_ID", sortOrder = "ASC", recordCount = 200,
+  startRecord = 0, excludeLastSecond = FALSE,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getMUBetsLite(marketId, betIds, betStatus = "MU",
-    matchedSince, orderBy = "BET_ID", sortOrder = "ASC",
-    recordCount = 200, startRecord = 0,
-    excludeLastSecond = FALSE,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMUBetsLite(marketId, betIds, betStatus = "MU", matchedSince,
+  orderBy = "BET_ID", sortOrder = "ASC", recordCount = 200,
+  startRecord = 0, excludeLastSecond = FALSE,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getBetHistory(marketId = 0, eventTypeIds = NULL,
-    detailed = FALSE, sortBetsBy = "NONE",
-    betTypesIncluded = "S", marketTypesIncluded = "O",
-    placedDateFrom = Sys.Date(), placedDateTo = Sys.time(),
-    recordCount = 100, startRecord = 0, locale, timezone,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getBetHistory(marketId = 0, eventTypeIds = NULL, detailed = FALSE,
+  sortBetsBy = "NONE", betTypesIncluded = "S", marketTypesIncluded = "O",
+  placedDateFrom = Sys.Date(), placedDateTo = Sys.time(),
+  recordCount = 100, startRecord = 0, locale, timezone,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 
-  getMarketProfitAndLoss(marketID,
-    includeSettledBets = FALSE, includeBspBets = TRUE,
-    netOfCommission = FALSE, locale,
-    server = getOption("bfServer"),
-    output = getOption("bfOutput"), curlOpts = list())
+getMarketProfitAndLoss(marketID, includeSettledBets = FALSE,
+  includeBspBets = TRUE, netOfCommission = FALSE, locale,
+  server = getOption("bfServer"), output = getOption("bfOutput"),
+  curlOpts = list())
 }
 \arguments{
   \item{betId}{The unique bet identifier}
@@ -295,80 +291,79 @@
   val2, ...))}.}
 }
 \value{
-  A list of class \code{GetBetRespSimple} containing slot
-  \code{matches} with info about matched portions of the
-  bet.
+A list of class \code{GetBetRespSimple} containing slot
+\code{matches} with info about matched portions of the bet.
 
-  A list of class \code{GetBetLiteRespSimple} with no
-  additional slots.  Contains a subset of information from
-  data part of \code{getBet} response.
+A list of class \code{GetBetLiteRespSimple} with no
+additional slots.  Contains a subset of information from
+data part of \code{getBet} response.
 
-  Data frame of class \code{GetBetMatchesLiteRespSimple}
-  containing subset of information from \code{@matches}
-  slot in \code{getBet} response.
+Data frame of class \code{GetBetMatchesLiteRespSimple}
+containing subset of information from \code{@matches} slot
+in \code{getBet} response.
 
-  Object of class \code{xxx} containing slot
+Object of class \code{xxx} containing slot
 
-  Object of class \code{GetBetHistoryRespSimple} containing
-  slots \code{betHistoryItems} - a data frame with one bet
-  per row and \code{matches} - a data frame with all the
-  matches if the \code{details} parameter was set to TRUE.
+Object of class \code{GetBetHistoryRespSimple} containing
+slots \code{betHistoryItems} - a data frame with one bet
+per row and \code{matches} - a data frame with all the
+matches if the \code{details} parameter was set to TRUE.
 
-  Object of class \code{GetMarketProfitAndLossRespSimple}
-  containing slot \code{annotations} which is a data frame
-  with P&L data.
+Object of class \code{GetMarketProfitAndLossRespSimple}
+containing slot \code{annotations} which is a data frame
+with P&L data.
 }
 \description{
-  With \code{getBetHistory}, \code{getMUBets} and
-  \code{getMUBetsLite} you access information about all
-  your bets.  With getBet, getBetLite and getBetMatchesLite
-  you can access detailed information about your specific
-  bets.
+With \code{getBetHistory}, \code{getMUBets} and
+\code{getMUBetsLite} you access information about all your
+bets.  With getBet, getBetLite and getBetMatchesLite you
+can access detailed information about your specific bets.
 
-  This is the lite version of the GetBet service.
+getBetLite: This is the lite version of the GetBet service.
 
-  This is a lite version of the GetBet service that returns
-  information on matched bets.
+getBetMatchesLite: This is a lite version of the GetBet
+service that returns information on matched bets.
 
-  Retrieve information about all your matched and unmatched
-  bets on a particular exchange server.  You should be
-  aware that voided bets are not returned by getMUBets.
-  Your application should track the number of matched and
-  unmatched bets against the number of bets returned by
-  getMUBets in order to detect a voided bet.
+getMUBets: Retrieve information about all your matched and
+unmatched bets on a particular exchange server.  You should
+be aware that voided bets are not returned by getMUBets.
+Your application should track the number of matched and
+unmatched bets against the number of bets returned by
+getMUBets in order to detect a voided bet.
 
-  This is a lite version of the getMUBets service.
+getMUBetsLite: This is a lite version of the getMUBets
+service.
 
-  * Profit and loss for single and multi-winner odds
-  markets is implemented however it won't calculate
-  worstCaseIfWin nor futureIfWin.
+* Profit and loss for single and multi-winner odds markets
+is implemented however it won't calculate worstCaseIfWin
+nor futureIfWin.
 }
 \details{
-  Retrieve information about a particular bet. Each request
-  will retrieve all components of the desired bet.
+getBet: Retrieve information about a particular bet. Each
+request will retrieve all components of the desired bet.
 
-  You can retrieve Cancelled, Lapsed, and Voided bets from
-  only settled markets and these bets are available for a
-  maximum of 10 days from the date the market was settled.
+You can retrieve Cancelled, Lapsed, and Voided bets from
+only settled markets and these bets are available for a
+maximum of 10 days from the date the market was settled.
 
-  * The calculation for AH markets will include
-  worstCaseIfWin but not futureIfWin.
+* The calculation for AH markets will include
+worstCaseIfWin but not futureIfWin.
 }
 \author{
-  Vitalie Spinu (\email{spinuvit@gmail.com})
+Vitalie Spinu (\email{spinuvit@gmail.com})
 }
 \references{
-  \url{http://code.google.com/p/betfairly/},
-  \url{https://docs.developer.betfair.com/betfair/}
+\url{http://code.google.com/p/betfairly/},
+\url{https://docs.developer.betfair.com/betfair/}
 }
 \seealso{
-  \code{\link{betfairly-package}}
-  \code{\link{bfSimpleOutput-class}}
+\code{\link{betfairly-package}}
+\code{\link{bfSimpleOutput-class}}
 
-  \code{\link{betfairly-package}}
-  \code{\link{bfSimpleOutput-class}}
+\code{\link{betfairly-package}}
+\code{\link{bfSimpleOutput-class}}
 
-  \code{\link{betfairly-package}}
-  \code{\link{bfSimpleOutput-class}}
+\code{\link{betfairly-package}}
+\code{\link{bfSimpleOutput-class}}
 }
 

@@ -2,7 +2,7 @@
 \alias{asBFDateTime}
 \title{Convert R date-time objects into XMLSchema types as required by betfair interface.}
 \usage{
-  asBFDateTime(x, tz = "Z")
+asBFDateTime(x, tz = "Z")
 }
 \arguments{
   \item{x}{Any R date/date-time object or character string
@@ -13,16 +13,16 @@
   before the UTC. And +01:00 is equivalent to CEST.}
 }
 \value{
-  time string in appropriate format
+time string in appropriate format
 }
 \description{
-  Convert R date/date-time objects into valid XMLSchema
-  representation as required by betfair interface.
+Convert R date/date-time objects into valid XMLSchema
+representation as required by betfair interface.
 }
 \author{
-  Vitalie Spinu (\email{spinuvit@gmail.com})
+Vitalie Spinu (\email{spinuvit@gmail.com})
 }
 \references{
-  http://www.w3.org/TR/xmlschema-2/#dateTime
+http://www.w3.org/TR/xmlschema-2/#dateTime
 }
 

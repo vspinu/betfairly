@@ -9,8 +9,7 @@ library(roxygen2)
 
 options(width = 80)
 system("rm -r -f betfairly.roxygen")
-
-roxygenize("~/works/betfair/betfairly")
+roxygenise("betfairly")
 ## roxygen2:::roxygenize("betfairly", "betfairly.roxygen")
 system("R CMD Rd2pdf --output=betfairly_manual.pdf --force betfairly.roxygen ")
 system("cp sysdata.rda betfairly/R/")

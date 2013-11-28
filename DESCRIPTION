@@ -18,7 +18,3 @@ Depends:
     XML
 Suggests:
     XMLSchema
-Collate:
-    'betfair.R'
-    'classes.R'
-    'funcs.R'
