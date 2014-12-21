@@ -3,6 +3,8 @@ This project is obsolete. As of November 10th, 2014, Betfair drooped support for
 the old version of their API. This package doesn't support the
 [new generation API](https://api.developer.betfair.com/services/webapps/docs/display/1smk3cen4v3lu3yomq5qye0ni/API-NG+Overview).
 
+Have a look at [abettor](https://github.com/phillc73/abettor) which seems to
+address new API.
 
 # Access Betfair API from R 
 
